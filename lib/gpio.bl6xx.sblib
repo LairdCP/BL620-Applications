@@ -13,8 +13,8 @@
 '// Module: BL6xx
 '//
 '//******************************************************************************
-GpioWrite(18,0)     //this is to make sure the application doesn't compile if this 
-                        //sblib file is #included for the wrong module
+dim z : z = ReadPwrSupplyMv()   //this is to make sure the application doesn't compile if this 
+                                //sblib file is #included for the wrong module
 '//******************************************************************************
 '// Definitions
 '//******************************************************************************
