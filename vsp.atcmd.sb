@@ -110,7 +110,7 @@
 // Definitions
 //******************************************************************************
 
-#define APP_VERSION                          "1.0"
+#define APP_VERSION                          "1.1"
 
         //Set this to 0 to disable all debugging messages
 #define ENABLE_DEBUG_PRINTS                  1
@@ -123,7 +123,7 @@
 
         // size of i[]
 #define NUM_OF_I_PARAMS                     (10)
-        // size of s$[] and must be at least 8 elements for BleSvcRegDevInfo()     
+        // size of s$[] and must be at least 8 elements for BleSvcRegDevInfo()
 #define NUM_OF_S_PARAMS                     (10)
 
 
@@ -170,7 +170,6 @@
 #define SCAN_MIN_RPTS_IN_CACHE              4
 
 
-
 //BLE EVENT MSG IDs
 #define BLE_EVBLEMSGID_CONNECT              0 // msgCtx = connection handle
 #define BLE_EVBLEMSGID_DISCONNECT           1 // msgCtx = connection handle
@@ -182,14 +181,13 @@
 #define BLE_CONNECTED_M                     0x10   //connected as master
 #define BLE_INITIATING                      0x04   //intiating a connection
 #define BLE_SCANNING                        0x08   //scanning for adverts
-    
+
 
 //Misc
 #define CAR_PRESS_DELAY                     100 //ms to wait between registering entries of '^'
 #define GENERIC_ERR                         1
 #define NOCARR_ERR                          2
 #define MAX_DEV_SCAN_TABLE                  10  //max number of devices to store in table when scanning
-
 
 
 //APP RUN MODES
@@ -213,7 +211,7 @@ onerror next HandlerOnErr
 //------------------------------------------------------------------------------
 // For debugging
 // --- rc = result code
-// --- ln = line number         
+// --- ln = line number
 //------------------------------------------------------------------------------
 Sub AssertRC(rc,ln)   
     if rc!=0 then
@@ -393,11 +391,11 @@ function SwitchToCmd()
     if TimerRunning(0)==0 then
         carCnt = carCnt + 1
         if carCnt<3 then
-            TimerStart(0,CAR_PRESS_DELAY,0)                       
+            TimerStart(0,CAR_PRESS_DELAY,0)
         else
             exitfunc 1
         endif
-    else 
+    else
         //invalid press
         TimerCancel(0)
         carCnt = 0
@@ -419,9 +417,9 @@ endsub
 // Scan for devices
 //-------------------------------------------------------------------------
 function _scan()
-    if SysInfo(2016) != BLE_CONNECTED_M then        
+    if SysInfo(2016) != BLE_CONNECTED_M then
         if CACHE_MAC_ADDRESSES == 1 then
-            rc=TableInit(tb$)       //table is used to store peer BT addresses
+            rc=TableInit(tb$)   //table is used to store peer BT addresses
             AssertRC(rc,151)
         endif
         
@@ -456,7 +454,7 @@ function _connect()
         rc=BleScanStop()     
         tb$=""
     endif
-    
+
     rc=BleConnect(s$[1], CONN_TMT, MIN_CONN_INTVL, MAX_CONN_INTVL, LINK_SUP_TMT)
     if rc!=0 then
         exitfunc rc
@@ -482,12 +480,12 @@ endfunc -1  //dont give response to user
 // #CMD#//  at+bls
 //------------------------------------------------------------------------------
 Function _at() 
-    StrShiftLeft(urtcmd$,1)              //remove the '+'
+    StrShiftLeft(urtcmd$,1)  //remove the '+'
     tlen = ExtractStrToken(urtcmd$,tkn$) 
     if tlen > 0 then  
-    
+
         //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-        if strcmp(tkn$,"bls")==0 then    
+        if strcmp(tkn$,"bls")==0 then
             exitfunc _scan()
         endif
     endif
@@ -529,7 +527,7 @@ function _Misc()
     //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     if strcmp(tkn$,"clearall")==0 then
       exitfunc ClearS()
-    endif  
+    endif
     //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     if strcmp(tkn$,"set")==0 then
       //extract 1 (#INTidx#) and store starting at i[1]
@@ -537,7 +535,7 @@ function _Misc()
       if rc != 0 then
         exitfunc rc
       endif
-      if (i[1] < 0) || (i[1] >= NUM_OF_S_PARAMS) then 
+      if (i[1] < 0) || (i[1] >= NUM_OF_S_PARAMS) then
         exitfunc 6
       endif
       //extract 1 (#STRescapedvalue#) and store starting at s$[1]
@@ -547,7 +545,7 @@ function _Misc()
       endif
       StrDeEscape(s$[i[1]])
       exitfunc 0
-    endif  
+    endif
     //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     if strcmp(tkn$,"sethex")==0 then
       //extract 1 (#INTidx#) and store starting at i[1]
@@ -555,7 +553,7 @@ function _Misc()
       if rc != 0 then
         exitfunc rc
       endif
-      if (i[1] < 0) || (i[1] >= NUM_OF_S_PARAMS) then 
+      if (i[1] < 0) || (i[1] >= NUM_OF_S_PARAMS) then
         exitfunc 6
       endif
       //extract 1 (#STRescapedvalue#) and store starting at s$[1]
@@ -565,7 +563,7 @@ function _Misc()
       endif
       StrDeEscape(s$[i[1]])
       exitfunc 0
-    endif  
+    endif
   endif
   //=================================================
   if strcmp(tkn$,"i")==0 then
@@ -576,7 +574,7 @@ function _Misc()
     //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     if strcmp(tkn$,"clearall")==0 then
       exitfunc ClearI()
-    endif  
+    endif
     //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     if strcmp(tkn$,"set")==0 then
       dim idx
@@ -603,26 +601,29 @@ function OnUartCmd() as integer
     rc=-2 //assume there is no error
     tlen = ExtractStrToken(urtcmd$,tkn$) //get first token
     if tlen > 0 then  
-    
+
         if strcmp(tkn$,"at")==0 then    
             rc = _at()
-            
-        elseif strcmp(tkn$,"atd")==0 || strcmp(tkn$,"connect")==0 then    
+
+        elseif strcmp(tkn$,"scan")==0 then
+            rc = _scan()
+
+        elseif strcmp(tkn$,"atd")==0 || strcmp(tkn$,"connect")==0 then
             rc = _connect()
-            
+
         elseif StrCmp(tkn$,"ato")==0 || StrCmp(tkn$,"bridge")==0 then
             _bridge()
             rc=-1       //don't give response to user
-            
+
         elseif StrCmp(tkn$,"ath")==0 || StrCmp(tkn$,"disconnect")==0  then
             rc = _disconnect()
-    
+
         elseif strcmp(tkn$,"misc")==0 then
             rc = _misc()
-            
+
         elseif strcmp(tkn$,"stop")==0 then
             rc=_stop()
-    
+
         elseif strcmp(tkn$,"quit")==0 || strcmp(tkn$,"exit")==0 then
             '//Stop all radio activity
             rc=BleDisconnect(hC)
@@ -630,11 +631,11 @@ function OnUartCmd() as integer
             rc=BleConnectCancel()
             print "\nVersion ";APP_VERSION
             exitfunc 0
-            
+
         elseif strcmp(tkn$,"bdaddr")==0 then
             s$[1] = SysInfo$(4)
             print "\n";StrHexize$(s$[1])
-    
+
         endif
     endif
     // send a response back to the user
@@ -649,10 +650,10 @@ sub Initialise()
     rc=BleScanConfig(1, SCAN_WINDOW)
     rc=BleScanConfig(2, SCAN_TYPE)
     rc=BleScanConfig(3, SCAN_MIN_RPTS_IN_CACHE)
-    
+
     //print device name
     print "\n\r";BleGetDeviceName$();"\n\r"
-    
+
     if CONNECT_ON_STARTUP == 1 then
         rc=_connect()
         if rc==-1 then
@@ -697,13 +698,13 @@ function HandlerUartRxVsp() as integer
             if StrCmp(vdta$,"^")==0 then
                 vsplen=0
                 vdta$=""
-                
+
                 '//parse the ^ entry
                 if SwitchToCmd() == 1 then
                     print "\n"
                     rc=SendMsgApp(0,CMD_MODE)
                 endif
-            
+
             else
                 //can send to the VSP service in the peripheral
                 rc=BleGattcWriteCmd(hC,vspRxH,vdta$)
@@ -719,7 +720,7 @@ endfunc 1
 //------------------------------------------------------------------------------
 function HandlerAdvRpt() as integer
     dim ad$,dta$,ndisc,rsi,nme$
-    
+
     while BleScanGetAdvReport(ad$,dta$,ndisc,rsi)==0
 
         if CACHE_MAC_ADDRESSES == 1 then   
@@ -731,11 +732,11 @@ function HandlerAdvRpt() as integer
                 break
             endif
         endif
-                
+
         '//get and print name of device
         rc=BleGetADByTag(dta$,0x09,nme$)
         print "\nAddress: "; StrHexize$(ad$), rsi, nme$
-                
+
         '// if there are MAX_DEV_SCAN_TABLE mac addresses in the table
         if tbIDs == MAX_DEV_SCAN_TABLE then
             rc=BleScanStop()
@@ -744,7 +745,7 @@ function HandlerAdvRpt() as integer
             print "\n";pr$
             break       
         endif
-        
+
     endwhile   
 endfunc 1
 
@@ -754,18 +755,18 @@ endfunc 1
 //------------------------------------------------------------------------------
 function HandlerBleMsg(BYVAL nMsgId AS INTEGER, BYVAL nCtx AS INTEGER) as integer
     hC = nCtx
-  
+
     select nMsgId  
         case BLE_EVBLEMSGID_CONNECT
             print "\n\nCONNECT"
-            
+
             // get handle of the rx characteristic
             rc=BleGattcFindChar(hC, hVspSvcUUID , 0, hVspRxUUID, 0)
             AssertRC(rc,659)
 
         case BLE_EVBLEMSGID_DISCONNECT
             print "\nNO CARRIER";pr$
-         
+
         case else      
     endselect    
 endfunc 1
@@ -778,7 +779,7 @@ function HandlerBleScanTO() as integer
     //erase the table where the mac addresses are being stored
     tb$=""
     UartRsp(0)
-    
+
     '//force release heap memory used by scan
     rc=BleScanStart(10,0)
     rc=BleScanStop()
@@ -789,9 +790,7 @@ endfunc 1
 // This handler is called when there is a connection attempt timeout
 //------------------------------------------------------------------------------
 function HandlerBleConnTO() as integer
-
   print"\nConnection attempt stopped via timeout";pr$
-
 endfunc 1
 
 
@@ -805,13 +804,13 @@ function HandlerFindChar(hConn, chProps, hChar, hIncSvc)
         //get handle of the tx characteristic
         rc=BleGattcFindChar(hC, hVspSvcUUID , 0, hVspTxUUID, 0)
         AssertRC(rc,862)
-        
+
     elseif chProps == LT_VSP_TX_PROPS then
         vspTxH = hChar
         //get the handle of the VSP TX char CCCD - will be returned in EvFindDesc handler
         rc=BleGattcFindDesc(hC, hVspSvcUUID , 0, hVspTxUUID, 0, BleHandleUuid16(CCCD_UUID), 0)
         AssertRC(rc,868)
-        
+
     else
         print "\nVSP Service not found. Disconnecting..."
         rc=_Disconnect()
@@ -879,14 +878,14 @@ endfunc 1
 function SetMode(msgID, cmd) as integer
     if cmd==BRIDGE_VSP_MODE then
         if SysInfo(2016) == BLE_CONNECTED_M then
-            OnEvent  EVUARTRX       call HandlerUartRxVsp    
+            OnEvent  EVUARTRX       call HandlerUartRxVsp
             Onevent  EVNOTIFYBUF    call HandlerNotifyBuf
             OnEvent  EVATTRNOTIFY   call HandlerAttrNotify
             print ok$;"\n"  
         endif
         
     elseif cmd==CMD_MODE then
-        OnEvent  EVUARTRX       call HandlerUartRx   
+        OnEvent  EVUARTRX       call HandlerUartRx
         carCnt=0
         UartRsp(0)
     endif
