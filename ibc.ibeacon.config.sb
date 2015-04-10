@@ -53,7 +53,7 @@
 //     -uuid    :   Display iBeacon UUID
 //     -major   :   Display iBeacon Major value
 //     -minor   :   Display iBeacon Minor value
-//     -tx      :   Display iBeacon UUID
+//     -tx      :   Display iBeacon TX Power
 //     -all     :   Display all iBeacon data (all of the above)
 //     -none    :   Display no iBeacon data - just the device name, BT address and RSSI
 //     -other   :   Display any other AD tags
