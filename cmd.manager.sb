@@ -367,6 +367,10 @@
 //    - #INTidx# will be checked for valid index 
 //
 // -----------------------------------------------------------------------------
+// misc address
+//    - Outputs the modules bluetooth low energy address
+//
+// -----------------------------------------------------------------------------
 // uart set #INTnewspeed#
 //    - changes the baud rate for communication with the device with immediate
 //      effect. Valid values are  9600, 14400, 19200, 38400, 57600, 115200,
@@ -1770,6 +1774,7 @@ endfunc 5
 //#CMD#//  misc s$ set #INTidx# #STRescapedvalue#
 //#CMD#//  misc i  clearall
 //#CMD#//  misc i  set #INTidx# #INTval#
+//#CMD#//  misc address
 //-------------------------------------------------------------------------
 function _Misc()  
   tlen = ExtractStrToken(urtcmd$,tkn$)
@@ -1831,6 +1836,13 @@ function _Misc()
       endif
       exitfunc 0
     endif  
+  endif
+  //=================================================
+  if strcmp(tkn$,"address")==0 then
+    dim Tmp$ : Tmp$ = sysinfo$(4)
+    Tmp$ = strhexize$(Tmp$)
+    print "BLE Address: ";Tmp$;"\n"
+    exitfunc -2
   endif
 endfunc 5
 
@@ -2466,7 +2478,10 @@ Initialise()
 // Startup()
 
 //Send user prompt for uart based command interface
-print "\n\r";BleGetDeviceName$();"\n\r"
+dim Tmp$ : Tmp$ = sysinfo$(4)
+Tmp$ = strhexize$(Tmp$)
+print "\n\r";BleGetDeviceName$();" - ";Tmp$;"\n\r\n\r"
+Tmp$ = ""
 //Send an OK response
 UartRsp(0)
 
