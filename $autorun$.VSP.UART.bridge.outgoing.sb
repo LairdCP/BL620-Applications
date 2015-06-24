@@ -127,13 +127,13 @@
 //******************************************************************************
 
 //This is the target Bluetooth device to connect to, 7 bytes in hex
-#define BTAddr "000016A4093D8A"
+#define BTAddr "01D9E61101BF82"
 
 //******************************************************************************
 // Definitions
 //******************************************************************************
         //if set to 1, on startup the module will connect to device BTAddr for VSP
-#define CONNECT_ON_STARTUP                 1
+#define CONNECT_ON_STARTUP                 0
 
         //BLE Scan config parameters
 #define SCAN_TMT                           20000   //Scan timeout in mS
