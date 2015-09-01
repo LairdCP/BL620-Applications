@@ -120,7 +120,8 @@
 //
 //        -> To switch back to command mode so the module can accept commands again, assert the 
 //           nAutorun pin. This can be done by unticking DTR in UwTerminal. Switch back to bridge mode
-//           by deasserting the nAutorun pin - ticking DTR in UwTerminal.
+//           by deasserting the nAutorun pin - ticking DTR in UwTerminal. This can also be done by 
+//           pressing the caret "^" key 3 times with LineMode disabled.
 //
 //        -> Make sure DIP Switch 2 on CON12 is in the ON position if using a DVK kit.
 //
@@ -148,6 +149,9 @@
 
 #define DISCON_TIMER                       0       //if this is changed, make sure to change the EvTmrX statement
 #define DISCON_TIMER_DUR_MS                500
+
+#define CARET_TIMER                        1
+#define CARET_TIMER_DUR_MS                 100
 
 //APP RUN MODES
 #define CMD_MODE                           0
@@ -187,6 +191,7 @@ dim er$ : er$ = "\nERROR " //Error command response
 dim pr$ : pr$ = "\r\n>" //
 dim nc$ : nc$ = "\nNO CARRIER" //No carrier response
 dim uc$ : uc$ = "\nUNKNOWN COMMAND" //Unknown command response
+dim carCnt : carCnt = 0                //count variable for number of times '^' entered
 
 //******************************************************************************
 // Register Error Handler as early as possible
@@ -228,20 +233,57 @@ rc = BLEDISCONNECT(BleHandle)
     endif
 endfunc -3  //dont give response to user
 
+//-------------------------------------------------------------------------
+// Process a caret character ^ do decide whether or not to switch to command mode
+// - When the carCnt value is 3, end func with 1 to switch to command mode
+// - Think of it like a boolean value
+//-------------------------------------------------------------------------
+function SwitchToCmd() 
+    '//if ^ was sent after the delay time (valid) increment the counter
+    if TimerRunning(CARET_TIMER)==0 then
+        carCnt = carCnt + 1
+        if carCnt<3 then
+            TimerStart(CARET_TIMER,CARET_TIMER_DUR_MS,0)                       
+        else
+            TimerCancel(CARET_TIMER)
+            exitfunc 1
+        endif
+    else 
+        //invalid press
+        print "\n"
+        TimerCancel(CARET_TIMER)
+        carCnt = 0
+    endif
+endfunc 0  //dont give response to user
+
 //==============================================================================
 //UART data received
 //==============================================================================
 FUNCTION HndlrUartRxVSP()
-    dim uLen
+    dim uLen, bytesWaiting, newData$
     IF BufferState == 0 && ModemStat == 1 then
-
+        //get number of bytes waiting in actual Uart RX Buffer before reading
+        bytesWaiting = UartInfo(3)
+  
         //read data that has arrived through via the UART
         uLen = UartReadN(u$, 20)
+        
+        //get the most recently received data
+        newData$ = Right$(u$, bytesWaiting)
 
         IF uLen > 0 then
-            rc = BLEGATTCWRITE(BleHandle, RXHandle, u$)
-            BufferState = 1
-            u$ = ""
+            if StrCmp(newData$,"^")==0 then
+                '//parse the ^ entry
+                if SwitchToCmd() == 1 then
+                    print "\n"
+                    //switch to command mode
+                    rc = SendMsgApp(0,CMD_MODE)
+                endif           
+            else
+                rc = BLEGATTCWRITE(BleHandle, RXHandle, u$)
+                BufferState = 1
+                u$ = ""
+            endif
         ENDIF
     ENDIF
 ENDFUNC 1
@@ -253,28 +295,6 @@ FUNCTION HndlrConnTO()
     PRINT "Connection attempt timed out.\n"
 ENDFUNC 1
 
-//==============================================================================
-//BLE message
-//==============================================================================
-FUNCTION HndlrBleMsg(nMsgId, nCtx)
-    IF (nMsgId == 0) then
-        //Connected!
-        BleHandle = nCtx
-        Mode = 1
-        dim UUID1$, UUID2$
-        UUID1$ = BASEUUID
-        UUID2$ = MIUUID
-        rc = BLEGATTCFINDCHAR(nCtx, BleHandleUuid128(UUID1$), 0, BleHandleUuid128(UUID2$), 0)
-        AssertRC(rc, 2)
-        PRINT "Connected!\n"
-        InConnection = 1
-    ELSEIF (nMsgId == 1) then
-        //Disconnected!
-        PRINT "Disconnected!\n"
-        InConnection = 0
-        rc = SendMsgApp(0,CMD_MODE)
-    ENDIF
-ENDFUNC 1
 
 //==============================================================================
 //Characteristic found
@@ -343,6 +363,12 @@ ENDFUNC 1
 //Characteristic written
 //==============================================================================
 FUNCTION HndlrAttrWrite(cHndl,aHndl,nSts)
+    if (nSts !=0) then
+        rc = BlePair(cHndl,1)
+        AssertRC(rc, 349)
+        exitfunc 1
+    endif
+    
     IF (Mode == 7) THEN
         //Enable TX notIFications
         Mode = 8
@@ -511,6 +537,52 @@ FUNCTION HndlrAttrRead(nCtx, Hndl, Stat)
     Data$ = ""
 ENDFUNC 1
 
+//==============================================================================
+//BLE message
+//==============================================================================
+FUNCTION HndlrBleMsg(nMsgId, nCtx)
+    //clear the caret count
+    carCnt = 0
+    
+    IF (nMsgId == 0) then
+        //Connected!
+        
+        //Opening the GATT client only whe connected to save memory
+        rc = BleGattcOpen(256, 0)
+        AssertRC(rc, 0)
+        BleHandle = nCtx
+        Mode = 1
+        dim UUID1$, UUID2$
+        UUID1$ = BASEUUID
+        UUID2$ = MIUUID
+        rc = BLEGATTCFINDCHAR(nCtx, BleHandleUuid128(UUID1$), 0, BleHandleUuid128(UUID2$), 0)
+        AssertRC(rc, 2)
+        PRINT "Connected!\n"
+        InConnection = 1
+        
+        //encrypt the connection if previously bonded with this device
+        dim addr$, fAsCentral, info, rollingAge, rollingCount
+        rc = BleGetAddrFromConnHandle(nCtx, addr$)
+        if (rc==0) then
+            if (BleBondingIsTrusted(addr$,fAsCentral,info,rollingAge,rollingCount)>0) then
+                rc = BleEncryptConnection(nCtx, 7, 1)   //might not need this
+            endif
+        endif
+        
+    ELSEIF (nMsgId == 1) then
+        //Disconnected!
+        PRINT "\nDisconnected!\n"
+        InConnection = 0
+        BleGattcClose()
+        rc = SendMsgApp(0,CMD_MODE)
+    
+    elseif (nMsgId == 10) then
+        //start process of writing characteristics and descriptors from the beginning
+        Mode = 6
+        exitfunc HndlrFindDesc(0, TXCCCDHandle)
+    ENDIF
+ENDFUNC 1
+
 //------------------------------------------------------------------------------
 //------------------------------------------------------------------------------
 function ClearS() 
@@ -575,13 +647,21 @@ endfunc 0
 //#CMD#//  ato OR bridge
 //-------------------------------------------------------------------------
 sub _bridge() 
+    TimerCancel(CARET_TIMER)
+    carCnt = 0
     rc = SendMsgApp(0,BRIDGE_VSP_MODE)
 endsub
 
 //-------------------------------------------------------------------------
-//#CMD#//  at+bti OR inquiry
+//#CMD#//  at+bls OR scan
 //-------------------------------------------------------------------------
-function _inquiry()            
+function _scan()            
+    //only allow scanning if not in a connection
+    if InConnection == 1 then
+        print "\nALREADY CONNECTED\n"
+        exitfunc -2
+    endif
+    
     rc = BLESCANSTART(SCAN_TMT, 0)
     if rc!=0 then
         exitfunc rc
@@ -606,7 +686,7 @@ function _connect()
     
     s$[1] = StrDehexize$(s$[1])
 
-    //Stop inquiring in case
+    //Stop scanning in case
     rc = BleScanStop()
 
     //Connect to target device
@@ -647,8 +727,8 @@ Function _at()
         if strcmp(tkn$,"btd")==0 then    
             exitfunc _delete()            
         //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-        elseif strcmp(tkn$,"bti")==0 then    
-            exitfunc _inquiry()
+        elseif strcmp(tkn$,"bls")==0 then    
+            exitfunc _scan()
         endif
     endif
 endfunc -4  //print 'UNKNOWN COMMAND' if incorrect command
@@ -765,8 +845,8 @@ function OnUartCmd() as integer
             _bridge()
             rc = -1       //don't give response to user
             
-        elseif strcmp(tkn$,"inquiry")==0  then    
-            rc = _inquiry()
+        elseif strcmp(tkn$,"scan")==0  then    
+            rc = _scan()
             
         elseif StrCmp(tkn$,"ato")==0 || StrCmp(tkn$,"bridge")==0 then
             rc = SendMsgApp(0,BRIDGE_VSP_MODE)
@@ -867,16 +947,26 @@ function HndlrGpioChan0()
     endif
 endfunc 1
 
+//------------------------------------------------------------------------------
+//------------------------------------------------------------------------------
+sub Initialise()
+  //just works pairing will work without confirmation
+  rc = BleSecMngrJustWorksConf(0)
+  //use 'Just Works' pairing
+  rc = BleSecMngrIoCap(0)
+  //bond when pairing
+  rc = BleSecMngrBondReq(1)
+endsub
+
 //******************************************************************************
 // Equivalent to main() in C
 //******************************************************************************
 
+//setup pairing
+Initialise()
+
 //Setup nAutorun pin to control switching between command and bridge mode
 rc=GpioBindEvent(0,28,2)
-
-//Open the GATT client
-rc = BleGattcOpen(256, 0)
-AssertRC(rc, 0)
 
 //Connect to device at startup if needed
 IF (CONNECT_ON_STARTUP == 1) THEN
