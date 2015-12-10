@@ -86,6 +86,9 @@ endfunc 1
 //==============================================================================
 function _gattPrimary() as integer
 
+	dim conHdl
+	secPair = 0
+
 '--- Extract all strings in command ---'
 '--------------------------------------'
 	while ExtractStrToken(urtcmd$, tkn$)!=0
@@ -133,6 +136,9 @@ endfunc 1
 // gatttool -b <bdaddr> --characteristics
 //==============================================================================
 function _gattChar() as integer
+
+	dim conHdl
+	secPair = 0
 
 '--- Extract all strings in command ---'
 '--------------------------------------'
@@ -183,11 +189,14 @@ endfunc 1
 //==============================================================================
 function _gattCharRead() as integer
 
+	dim conHdl
+	secPair = 0
+
 '--- Extract all strings in command ---'
 '--------------------------------------'	
 	while ExtractStrToken(urtcmd$, tkn$)!=0
 		if strcmp(tkn$,"help")==0 then
-			// Display the gatttool help menu
+			// Display the gatttool char-read help menu
 			print "Usage:\n"
 			print "		gatttool -b <bdaddr> --char-read --handle=0x0000 \n"
 			exitfunc 1
@@ -242,14 +251,16 @@ endfunc 1
 //==============================================================================
 function _gattCharWrite() as integer
 
+	dim conHdl
 	dim val$								// value (string format)
 	dim val									// value (integer format)
+	secPair = 0
 
 '--- Extract all strings in command ---'
 '--------------------------------------'	
 	while ExtractStrToken(urtcmd$, tkn$)!=0 
 		if strcmp(tkn$,"help")==0 then
-			// Display the gatttool help menu
+			// Display the gatttool char-write help menu
 			print "Usage:\n"
 			print "		gatttool -b <bdaddr> --char-write --handle=0x0000 --value=0000 \n"
 			exitfunc 1
@@ -315,13 +326,15 @@ endfunc 1
 //==============================================================================
 function _gattCharDesc()
 
+	dim conHdl
 	chrHdl = 0
+	secPair = 0
 
 '--- Extract all strings in command ---'
 '--------------------------------------'	
 	while ExtractStrToken(urtcmd$, tkn$)!=0
 		if strcmp(tkn$,"help")==0 then
-			//print the gatttool help menu
+			// Display the gatttool char-desc help menu
 			print "Usage:\n"
 			print "		gatttool -b <bdaddr> --char-desc --handle=0x0000\n"
 			exitfunc 1
@@ -521,6 +534,11 @@ function HandlerPrimSvc(hConn,hUuid,hStart,hEnd) as integer
 			print ", end grp handle = 0x";integer.h' hEnd
 			print ", uuid = ";integer.h' hUuid
 			rc = BleDiscServiceNext(hConn)
+			if rc!=0 then
+				BleGattcClose()
+				print "\n";pr$
+				exitfunc 1
+			endif
 
 		elseif command == SMARTZ_COMMAND_GATTTOOL_CHARACTERISTICS then
 			rc = BleDiscCharFirst(hConn,0,hStart,hEnd)

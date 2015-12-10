@@ -52,13 +52,13 @@ endsub
 //==============================================================================
 function _hciDev()
 
-	DIM addr$
+	dim addr$
 
 '--- Extract all strings in command ---'
 '--------------------------------------'
 	while ExtractStrToken(urtcmd$, tkn$)!=0
 		if strcmp(tkn$,"help")==0 then
-			//Display the dev help menu
+			//Display the hcitool dev help menu
 			print "Usage:\n"
 			print "		hcitool dev\n"
 			exitfunc 1
@@ -83,7 +83,7 @@ function _hciCon()
 '--------------------------------------'
 	while ExtractStrToken(urtcmd$, tkn$)!=0
 		if strcmp(tkn$,"help")==0 then
-			// Display the con help menu
+			// Display the hcitool con help menu
 			print "Usage:\n"
 			print "		hcitool con\n"
 			exitfunc 1
@@ -114,7 +114,7 @@ function _hciLeAdv()
 '--------------------------------------'
 	while ExtractStrToken(urtcmd$, tkn$)!=0
 		if strcmp(tkn$,"help")==0 then
-		// Display the leadv help menu
+		// Display the hcitool leadv help menu
 			print "Usage:\n"
 			print "		hcitool leadv [--timeout=t] advert time-out in seconds\n"
 			print ""
@@ -147,7 +147,7 @@ function _hciNoLeAdv()
 '--------------------------------------'
 	while ExtractStrToken(urtcmd$, tkn$)!=0
 		if strcmp(tkn$,"help")==0 then
-		// Display the noleadv help menu
+		// Display the hcitool noleadv help menu
 			print "Usage:\n"
 			print "		hcitool noleadv\n"
 			print ""
@@ -174,7 +174,7 @@ function _hciLeScan()
 '--------------------------------------'
 	while ExtractStrToken(urtcmd$, tkn$)!=0
 		if strcmp(tkn$,"help")==0 then
-		// Display the lescan help menu
+		// Display the hcitool lescan help menu
 			print "Usage:\n"
 			print "		hcitool lescan [--length=N] maximum scan duration in seconds\n"
 			print ""
@@ -202,6 +202,8 @@ endfunc 1
 //	hcitool lecc <bdaddr>
 //==============================================================================
 function _hciLeCc() as integer
+
+	addr$=""
 
 '--- Extract all strings in command ---'
 '--------------------------------------'
@@ -231,6 +233,8 @@ endfunc 1
 //	hcitool ledc <handle>
 //==============================================================================
 function _hciLeDc() as integer
+
+	dim conHdl
 
 '--- Extract all strings in command ---'
 '--------------------------------------'
@@ -372,7 +376,8 @@ function HandlerBleMsg(BYVAL nMsgId AS INTEGER, BYVAL nCtx AS INTEGER) as intege
 
 	case BLE_EVBLEMSGID_DISCONNECT
 		// Release connection handle from list of connection handles
-		hz = RelConnHandle(nCtx)
+		hz = nCtx
+		rc = RelConnHandle(hz)
 		conns = conns - 1
 		print "\nDisconnected\n";pr$
 
