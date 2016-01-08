@@ -1,0 +1,365 @@
+'//******************************************************************************
+'// Laird Technologies (c) 2014
+'//
+'// This is a sample app for demonstration purpose only
+'//
+'// +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+'// +++++                                                                      ++
+'// +++++  When UwTerminal downloads the app it will store it as a filenname   ++
+'// +++++  which consists of all characters up to the first . and excluding it ++
+'// +++++                                                                      ++
+'// +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+'//
+'// BleLedDemo.sb
+'//  -- Created to demonstrating the following:
+'//     - Press a button on the BL600 dev board and it lights an LED on the BL620 dev board.
+'//     - Press a button on the BL620 dev board and it lights an LED on the BL600 dev board
+'//
+'// Values: 0x00  -> Both LEDs off
+'//         0x01  -> LED 0 on, LED 1 off
+'//         0x02  -> LED 1 on, LED 0 off
+'//         0x03  -> Both LEDs on
+'//
+'//   ####################################
+'//   #                                  #
+'//   #  Search for TODO to make changes #
+'//   #                                  #
+'//   ####################################
+'//
+'//******************************************************************************
+
+//++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+//GPIO Defines
+//++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+#define GPIO_BTN0               16
+#define GPIO_BTN1               17
+#define GPIO_LED0               18
+#define GPIO_LED1               19
+
+'//******************************************************************************
+'// Definitions
+'//******************************************************************************
+#define ENABLE_DEBUG_PRINTS                  1
+
+        '// Laird Technologies 128 bit Base UUID
+#define LT_BASE_UUID                         "\56\9a\00\00\b8\7f\49\0c\92\cb\11\ba\5e\a5\16\7c\"
+        '// Button Led Service 128 bit UUID - Little Endian
+#define LED_SVC_UUID                         "\7C\16\A5\5E\BA\11\CB\92\0C\49\7F\B8\02\19\9A\56"
+
+        '// Button Led Service 16 bit UUID
+#define LED_SVC_UUID16                       0x1902
+        '// GATT Client (e.g. BL620) LED Controller Characteristic UUID
+#define CLILEDS_CHAR_UUID                    0x2030
+        '// GATT Server (e.g. BL600) LED Controller Characteristic UUID
+#define SERLEDS_CHAR_UUID                    0x2031
+
+
+        '//will advertise this name
+#define DEVICENAME                           "Laird Btn LED Demo - BL600"       
+        '//version of this app in Device Info Service
+#define SWREV                               "1.0"
+
+        '// GATT Client (e.g. BL620) LED Controller Characteristic Handle
+#define CLILEDS_CHAR_HANDLE            (13)
+        '// GATT Server (e.g. BL600) LED Controller Characteristic Handle
+#define SERLEDS_CHAR_HANDLE            (17)
+        '// GATT Server LED Controller Char CCCD Handle
+#define SERLEDS_CHAR_CCCD_HANDLE            (15)
+
+        '//Attribute written successfully
+#define ATTR_WRT_SUCCESS    0
+
+
+
+//++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+//Can ignore the rest of the following #defines for now
+//++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+#define DEVICENAME_WRITABLE                   1
+       '//BLE_APPEARANCE_GENERIC_TAG
+#define APPEARANCE                           512 
+#define MANF_NAME                            "Laird Technologies"
+#define MODELSTR                             "BL600"
+
+
+        '// Minimum acceptable connection interval (0.5 seconds)
+#define MIN_CONN_INTERVAL                    20000
+        '// Maximum acceptable connection interval (1 second).
+#define MAX_CONN_INTERVAL                    100000
+        '// Slave latency -- number of conn events that can be missed
+        '// Effective Conn interval will be (SLAVE_LATENCY+1)*ACTUAL_CONN_INTERVAL
+#define SLAVE_LATENCY                        1
+        '// Connection supervisory timeout (4 seconds) - max 32 seconds
+#define CONN_SUP_TIMEOUT                     8000000                    
+        '//EvBleMsg ID for a BLE disconnection event
+#define BLE_DISCONNECTED                     1
+
+
+#define AD_128BIT_UUID                       0x21
+
+
+//******************************************************************************
+// Register Error Handler as early as possible
+//******************************************************************************
+sub HandlerOnErr()
+  if (ENABLE_DEBUG_PRINTS!=0) then
+    print "\n OnErr - ";GetLastError();"\n"
+  endif
+endsub
+onerror next HandlerOnErr
+
+
+'//******************************************************************************
+'// Global Variable Declarations
+'//******************************************************************************
+dim rc           '//resultcode
+dim dn$          '//device name
+dim prAddr$      '//peer mac address (not required for this app) hence empty
+dim hSvc         '//Service handler
+dim hCliLeds     '//GATT Client LEDs characteristic handle
+dim hSerLeds     '//GATT Server LEDs characteristic handle
+dim hSvcUuid     '//Btn LED service UUID handle
+dim hConn        '//Connection handle
+dim txBuffs      '//Number of free TX buffers available
+dim hSerLedsUuid
+                
+'//******************************************************************************
+'// Initialise Global Variable
+'//******************************************************************************
+dn$=DEVICENAME
+prAddr$=""
+txBuffs = 1
+
+
+'//******************************************************************************
+'// Function and Subroutine definitions
+'//******************************************************************************
+
+'//------------------------------------------------------------------------------
+'// For debugging
+'// --- Format: ln=ABCD 
+'//     AB : Subroutine/Function number
+'//     CD : Result code number         
+'//------------------------------------------------------------------------------
+Sub AssertRC(rc,ln)  
+    if rc!=0 then
+        print "\nFail :";integer.h' rc;" at tag ";ln
+    endif
+EndSub
+
+
+'//------------------------------------------------------------------------------
+'// Delay using a while loop
+'//------------------------------------------------------------------------------
+Sub Delay(ms)
+    dim i : i = GetTickCount()
+    while GetTickSince(i)<ms
+    endwhile
+EndSub
+
+      
+'//------------------------------------------------------------------------------
+'// Start scanning
+'//------------------------------------------------------------------------------
+Function StartScanning()
+    rc = BleScanStart(0,0)
+    AssertRC(rc,197)
+    print "\n-- Scanning"
+EndFunc 1
+
+
+'//------------------------------------------------------------------------------
+'// Initialise GPIOS
+'//------------------------------------------------------------------------------
+Sub InitGpios()
+    rc=gpiosetfunc(GPIO_BTN0,1,2)             //button 0 digital input with weak pull up resistor
+    AssertRC(rc,188)
+    rc=gpiosetfunc(GPIO_BTN1,1,2)             //button 1 digital input with weak pull up resistor
+    AssertRC(rc,188)
+    rc=GpioSetFunc(GPIO_LED0,2,0)             //sets sio18 (LED0) as a digital out
+    AssertRC(rc,190)
+    GpioWrite(GPIO_LED0,0)
+    rc=GpioSetFunc(GPIO_LED1,2,0)             //sets sio19 (LED1) as a digital out
+    AssertRC(rc,192)
+    GpioWrite(GPIO_LED1,0)
+    
+    //bind button presses to events
+    rc=GpioBindEvent(0,GPIO_BTN0,2)         //binds a gpio transition high or low on button 0 (SIO16) to event 0
+    AssertRC(rc,281)
+    rc=GpioBindEvent(1,GPIO_BTN1,2)         //binds a gpio transition high or low on button 1 (SIO17) to event 1
+    AssertRC(rc,283)
+EndSub
+
+      
+'//------------------------------------------------------------------------------
+'//------------------------------------------------------------------------------
+Sub OnStartup()
+    print "\n\n*****************************************************************************************"
+    print "\n** BleLedDemo.sb **\n"
+    print "\n*****************************************************************************************"
+    print "\n  Notifiable characteristic (0x2031) which notifies when button is pressed or depressed"
+    print "\n  Writeable characteristic (0x2030) to control on board LEDs:"
+    print "\n    * Bit 0 controls LED 1, Bit 1 controls LED 0"
+    print "\n    * Set bit to turn LED on, clear bit to turn LED off"
+    print "\n    * e.g. 0x11 turns both LEDs on, 0x10 turns on LED 0 and turns off LED 1\n**"
+    print "\n*****************************************************************************************"
+    print "\n*****************************************************************************************\n"
+    
+    InitGpios()  
+    rc=BleGattcOpen(0,0)
+    // rc=BleScanConfig(2,1)
+    rc=StartScanning()   
+EndSub
+
+    
+    
+'//******************************************************************************
+'// Handler definitions
+'//******************************************************************************
+
+'//------------------------------------------------------------------------------
+'// Called when a notification or indication arrives from gatt server (BL600)
+'//------------------------------------------------------------------------------
+Function HndlrAttrNotify()
+    print "\n Indication received from server"
+    dim dta$, nDisc, hAttr, dta
+    '//Read the data
+    rc=BleGattcNotifyRead(hConn, hAttr, dta$, nDisc)
+    AssertRC(rc,239)
+        
+    if nDisc == 0 then
+        //write values to LEDs
+		print "\n indication value:";dta$
+        GpioWrite(GPIO_LED0,StrGetChr(dta$,0))
+        GpioWrite(GPIO_LED1,StrGetChr(dta$,1))       
+    else
+        print "\n:: ";nDisc;" notifications discarded"       
+    endif
+EndFunc 1
+
+
+
+'//------------------------------------------------------------------------------
+'// Called when BleGattcWrite() acknowledged at GATT layer
+'//------------------------------------------------------------------------------
+Function HndlrAttrWrite(nCtx, hAttr, status)
+    if status != ATTR_WRT_SUCCESS then
+        print "\n:: ATT Error 0x"; integer.h'status
+    else
+        print "\nEnabled Indications"
+    endif
+EndFunc 1
+
+
+'//------------------------------------------------------------------------------
+'// Called when BleGattcWriteCmd() acknowledged at link layer
+'//------------------------------------------------------------------------------
+Function HndlrNotifyBuf()
+    txBuffs = txBuffs + 1
+EndFunc 1
+
+
+'//------------------------------------------------------------------------------
+'// Called when an advert is received
+'//------------------------------------------------------------------------------
+Function HndlrAdvRpt()
+    dim pAddr$, advDta$, nDisc, nRssi, adVal$, tag, found    //found is set to 1 when laird VSP UUID is found in advert data
+    dim uuid$ : uuid$ = LED_SVC_UUID
+    do
+        rc=BleScanGetAdvReport(pAddr$, advDta$, nDisc, nRssi)    
+        
+            if StrPos(advDta$,uuid$, 0)>0 then
+                rc=BleScanStop()
+                AssertRC(rc,89)
+                rc=BleConnect(pAddr$, 15000, MIN_CONN_INTERVAL, MAX_CONN_INTERVAL, CONN_SUP_TIMEOUT)
+                print "\nConnecting...\n"
+                AssertRC(rc,92)     
+                break
+            endif
+    until rc!=0
+EndFunc 1
+
+
+
+'//------------------------------------------------------------------------------
+'// Button 0 transition handler
+'//------------------------------------------------------------------------------
+Function HndlrGpio()  
+    OnEvent EvGpioChan0 disable
+    OnEvent EvGpioChan1 disable
+    
+    Delay(150)
+    
+    dim val$
+    rc=StrSetChr(val$, !GpioRead(GPIO_BTN1), 1)
+    AssertRC(rc,1203)
+    rc=StrSetChr(val$, !GpioRead(GPIO_BTN0), 0)
+    AssertRC(rc,1203)
+
+    if txBuffs>0 then
+        //GATT Client requests to write to the GATT server's characteristic
+        //In other words, "Can I turn on your LED?"
+        rc=BleGattcWriteCmd(hConn, SERLEDS_CHAR_HANDLE, val$)
+        AssertRC(rc,1203)
+        txBuffs = txBuffs-1
+        print "\n Write to server LEDS:";val$
+    endif
+    
+    OnEvent EvGpioChan0 call HndlrGpio
+    OnEvent EvGpioChan1 call HndlrGpio
+EndFunc 1 
+ 
+
+'//------------------------------------------------------------------------------
+'// Ble event handler
+'//------------------------------------------------------------------------------
+Function HndlrBleMsg(ByVal nMsgId, ByVal connHndl)
+    if nMsgID==1 then
+        print "\n\n-- Disconnected from client\n"
+    elseif nMsgID==0 then
+        print "\n-- Connected to GATT Server"
+        hConn = connHndl
+        
+        //write 1 to CCCD to enable notifications
+        dim notf$ : notf$ = "\02\00"
+        rc=BleGattcWrite(hConn, SERLEDS_CHAR_CCCD_HANDLE, notf$)
+        AssertRC(rc,277)
+
+        OnEvent EvGpioChan0 call HndlrGpio
+        OnEvent EvGpioChan1 call HndlrGpio
+    endif
+EndFunc 1
+
+
+
+
+
+'//------------------------------------------------------------------------------
+'// Disconnection 
+'//------------------------------------------------------------------------------
+Function HndlrDiscon(hConn, rsn)
+    rc=StartScanning()
+EndFunc 1
+    
+
+'//******************************************************************************
+'// Equivalent to main() in C
+'//******************************************************************************
+OnStartup()
+
+OnEvent EvAttrWrite call HndlrAttrWrite
+OnEvent EvNotifyBuf call HndlrNotifyBuf
+onevent EVATTRNOTIFY       call HndlrAttrNotify
+onevent EVBLE_SCAN_TIMEOUT call StartScanning             
+onevent EVBLE_ADV_REPORT   call HndlrAdvRpt             
+OnEvent EvBleMsg     call HndlrBleMsg
+OnEvent EvDiscon    call HndlrDiscon
+
+
+'//------------------------------------------------------------------------------
+'// Wait for a synchronous event.
+'// An application can have multiple <WaitEvent> statements
+'//------------------------------------------------------------------------------
+WaitEvent
+
+
