@@ -1,5 +1,18 @@
-//******************************************************************************
-// Laird Technologies (c) 2014
+// Copyright (c) 2014, Laird
+//
+// Permission to use, copy, modify, and/or distribute this software for any
+// purpose with or without fee is hereby granted, provided that the above
+// copyright notice and this permission notice appear in all copies.
+//
+// THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES
+// WITH REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF
+// MERCHANTABILITY AND FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY
+// SPECIAL, DIRECT, INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES
+// WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS, WHETHER IN AN
+// ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF OR
+// IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
+//
+// SPDX-License-Identifier:ISC
 //
 //TODO: Isolate carrat checking thing into its own funcdtion so that you can use it across apps easily
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
@@ -537,37 +550,36 @@
 
 
 //BLE EVENT MSG IDs
-#define BLE_EVBLEMSGID_CONNECT                          0 // msgCtx = connection handle
-#define BLE_EVBLEMSGID_DISCONNECT                       1 // msgCtx = connection handle
-#define BLE_EVBLEMSGID_IMMEDIATE_ALERT_SERVICE_ALERT    2 // msgCtx = alert level
-#define BLE_EVBLEMSGID_LINKLOSS_SERVICE_ALERT           3 // msgCtx = alert level
-#define BLE_EVBLEMSGID_SERVICE_ERROR                    4 // msgCtx = resultcode
-#define BLE_EVBLEMSGID_HTS_INDICATION_STATE             5 // msgCtx = new indication state 0=off, 1=on
-#define BLE_EVBLEMSGID_HTS_INDICATION_CNF               6 // msgCtx = not used
-#define BLE_EVBLEMSGID_BPS_INDICATION_STATE             7 // msgCtx = new indication state 0=off, 1=on
-#define BLE_EVBLEMSGID_BPS_INDICATION_CNF               8 // msgCtx = not used
-#define BLE_EVBLEMSGID_DISPLAY_PASSKEY                  9 // msgCtx = passcode to display
-#define BLE_EVBLEMSGID_NEW_BOND                        10 // msgCtx = connection handle
-#define BLE_EVBLEMSGID_AUTH_KEY_REQUEST                11 // msgCtx = 1 for passkey, 2 for 16 byte OOB data
-#define BLE_EVBLEMSGID_HRS_NOTIFICATION_STATE          12 // msgCtx = new notification state 0=off, 1=on
+#define BLE_EVBLEMSGID_CONNECT                          0 //msgCtx = connection handle
+#define BLE_EVBLEMSGID_DISCONNECT                       1 //msgCtx = connection handle
+#define BLE_EVBLEMSGID_IMMEDIATE_ALERT_SERVICE_ALERT    2 //msgCtx = alert level
+#define BLE_EVBLEMSGID_LINKLOSS_SERVICE_ALERT           3 //msgCtx = alert level
+#define BLE_EVBLEMSGID_SERVICE_ERROR                    4 //msgCtx = resultcode
+#define BLE_EVBLEMSGID_HTS_INDICATION_STATE             5 //msgCtx = new indication state 0=off, 1=on
+#define BLE_EVBLEMSGID_HTS_INDICATION_CNF               6 //msgCtx = not used
+#define BLE_EVBLEMSGID_BPS_INDICATION_STATE             7 //msgCtx = new indication state 0=off, 1=on
+#define BLE_EVBLEMSGID_BPS_INDICATION_CNF               8 //msgCtx = not used
+#define BLE_EVBLEMSGID_DISPLAY_PASSKEY                  9 //msgCtx = passcode to display
+#define BLE_EVBLEMSGID_NEW_BOND                        10 //msgCtx = connection handle
+#define BLE_EVBLEMSGID_AUTH_KEY_REQUEST                11 //msgCtx = 1 for passkey, 2 for 16 byte OOB data
+#define BLE_EVBLEMSGID_HRS_NOTIFICATION_STATE          12 //msgCtx = new notification state 0=off, 1=on
 //#define FUTURE_USE                                   13
-#define BLE_EVBLEMSGID_CONN_PARMS_UPDATE               14 // msgCtx = connection handle
-#define BLE_EVBLEMSGID_CONN_PARMS_UPDATE_FAIL          15 // msgCtx = connection handle
-#define BLE_EVBLEMSGID_CONN_TO_BONDED_MASTER           16 // msgCtx = connection handle
-#define BLE_EVBLEMSGID_UPDATED_BOND                    17 // msgCtx = connection handle
-#define BLE_EVBLEMSGID_ENCRYPTED                       18 // msgCtx = connection handle
-#define BLE_EVBLEMSGID_POWER_FAILURE_WARNING           19 // msgCtx = current supply voltage
-#define BLE_EVBLEMSGID_UNENCRYPTED                     20 // msgCtx = connection handle
-#define BLE_EVBLEMSGID_DEVICENAME_WRITE                21 // msgCtx = connection handle 
-
+#define BLE_EVBLEMSGID_CONN_PARMS_UPDATE               14 //msgCtx = connection handle
+#define BLE_EVBLEMSGID_CONN_PARMS_UPDATE_FAIL          15 //msgCtx = connection handle
+#define BLE_EVBLEMSGID_CONN_TO_BONDED_MASTER           16 //msgCtx = connection handle
+#define BLE_EVBLEMSGID_UPDATED_BOND                    17 //msgCtx = connection handle
+#define BLE_EVBLEMSGID_ENCRYPTED                       18 //msgCtx = connection handle
+#define BLE_EVBLEMSGID_POWER_FAILURE_WARNING           19 //msgCtx = current supply voltage
+#define BLE_EVBLEMSGID_UNENCRYPTED                     20 //msgCtx = connection handle
+#define BLE_EVBLEMSGID_DEVICENAME_WRITE                21 //msgCtx = connection handle 
 
 //APP RUN MODES
-#define CMD_MODE                                 0
-#define BRIDGE_VSP_MODE                          1
-#define BRIDGE_SPP_MODE                          2
+#define CMD_MODE                             0
+#define BRIDGE_VSP_MODE                      1
+#define BRIDGE_SPP_MODE                      2
 
 //MISC
-#define CAR_PRESS_DELAY                     100          //ms to wait between registering entries of '^'
+#define CAR_PRESS_DELAY                      100          //ms to wait between registering entries of '^'
 
 //******************************************************************************
 // Register Error Handler as early as possible
@@ -630,24 +642,24 @@ dim stRsp$ as string        //Uart rx data is stored here
 
 dim ok$,er$,pr$, uc$
 
-dim i[NUM_OF_I_PARAMS]      // index 0 used for return values
-dim s$[NUM_OF_S_PARAMS]    // must be at least 8 elements for BleSvcRegDevInfo()
+dim i[NUM_OF_I_PARAMS]      //Index 0 used for return values
+dim s$[NUM_OF_S_PARAMS]     //Must be at least 8 elements for BleSvcRegDevInfo()
 
-dim urtcmd$                 //cmd line from uart
-dim tkn$,tlen               //used by command parser
+dim urtcmd$                 //CMD line from uart
+dim tkn$,tlen               //Used by command parser
 dim hSvc[NUM_OF_SVCS]       //gatts : handle for new service being created is in index 0
 dim amd[NUM_OF_METADATA]    //gatts : attribute meta data
 dim hchar[NUM_OF_CHARS]     //gatts : handles for characteristics
-dim hc[NUM_OF_CONNS+1]      //contains connection handles
-dim conns                   //number of connections
-dim gcState                 // gatt client state, 0=IDLE, 1=TableMapping
-dim urts                    //will be <0 if uart parser suspended
-dim hcVsp                   //handle of connection to use for VSP service
-dim vdta$                   //data to send over virtual serial port
+dim hc[NUM_OF_CONNS+1]      //Contains connection handles
+dim conns                   //Number of connections
+dim gcState                 //gatt client state, 0=IDLE, 1=TableMapping
+dim urts                    //Will be <0 if uart parser suspended
+dim hcVsp                   //Handle of connection to use for VSP service
+dim vdta$                   //Data to send over virtual serial port
 dim vsplen                  //0 implies can send data. >0 waiting for notify event
-dim vspRxH                  //handle of the RX char in the peripheral for VSP
-dim vspTxH                  //handle of the TX char in the peripheral for VSP
-dim carCnt                  //count variable for number of times '^' entered
+dim vspRxH                  //Handle of the RX char in the peripheral for VSP
+dim vspTxH                  //Handle of the TX char in the peripheral for VSP
+dim carCnt                  //Count variable for number of times '^' entered
 
 //******************************************************************************
 // Initialisse Global Variable
@@ -658,9 +670,9 @@ er$    = "\nERROR "
 pr$    = "\r\n>"
 uc$    = "\nUNKNOWN COMMAND"
 
-gcState = 0 // gatt client is idle
-urts=0 //not suspended
-conns = 0  //number of connections
+gcState = 0 //gatt client is idle
+urts=0 //Not suspended
+conns = 0  //Number of connections
 hcVsp = -1
 vsplen = 0
 vspRxH = VSP_RX_CHAR_HANDLE
@@ -669,7 +681,6 @@ vspTxH = VSP_TX_CHAR_HANDLE
 //******************************************************************************
 // Function and Subroutine definitions
 //******************************************************************************
-
 
 //==============================================================================
 //==============================================================================
@@ -823,12 +834,12 @@ endfunc 0
 //------------------------------------------------------------------------------
 //** #include the correct library file for the smartBASIC module being used 
 //------------------------------------------------------------------------------
-#include "lib\cmd.ble.def.sblib"            //comment out line below and uncomment this line if running on a single mode (BLE) module
-// #include "lib\cmd.btc.manager.sblib"     //comment out line above and uncomment this line if running on a dual mode (BLE & BT Classic) module
+#include "lib\cmd.ble.def.sblib"            //Comment out line below and uncomment this line if running on a single mode (BLE) module
+//#include "lib\cmd.btc.manager.sblib"     //Comment out line above and uncomment this line if running on a dual mode (BLE & BT Classic) module
 
 //-------------------------------------------------------------------------
-//#CMD#// txpower = #INTdbm#       - set tx power to #INTdbm#
-//#CMD#// txpower ?                - get tx power
+//#CMD#// txpower = #INTdbm#       - Set tx power to #INTdbm#
+//#CMD#// txpower ?                - Get tx power
 //-------------------------------------------------------------------------
 function _TxPower()
   rc = ParseSetQuery(i[1])
@@ -870,7 +881,7 @@ function _Advert()
     endif
     //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     if strcmp(tkn$,"initadv")==0 then
-      //extract 4 (#INTstridx# #INTadflags# #INTadappearance# #INTmaxdevname#) and store starting at i[1]
+      //Extract 4 (#INTstridx# #INTadflags# #INTadappearance# #INTmaxdevname#) and store starting at i[1]
       rc = ExtractIntTokens(urtcmd$,1,4)
       if rc != 0 then
         exitfunc rc
@@ -879,7 +890,7 @@ function _Advert()
     endif
     //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     if strcmp(tkn$,"initscn")==0 then
-      //extract 1 (#INTstridx#) and store starting at i[1]
+      //Extract 1 (#INTstridx#) and store starting at i[1]
       rc = ExtractIntTokens(urtcmd$,1,1)
       if rc != 0 then
         exitfunc rc
@@ -888,7 +899,7 @@ function _Advert()
     endif
     //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     if strcmp(tkn$,"ADuuid16")==0 then
-      //extract 7 (#INTstridx# #INTuuid0# #INTuuid1# #INTuuid2# #INTuuid3# #INTuuid4# #INTuuid5#) and store starting at i[1]
+      //Extract 7 (#INTstridx# #INTuuid0# #INTuuid1# #INTuuid2# #INTuuid3# #INTuuid4# #INTuuid5#) and store starting at i[1]
       rc = ExtractIntTokens(urtcmd$,1,7)
       if rc != 0 then
         exitfunc rc
@@ -897,7 +908,7 @@ function _Advert()
     endif
     //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     if strcmp(tkn$,"ADuuid128")==0 then
-      //extract 2 (#INTstridx# #INTuuidhandle#) and store starting at i[1]
+      //Extract 2 (#INTstridx# #INTuuidhandle#) and store starting at i[1]
       rc = ExtractIntTokens(urtcmd$,1,2)
       if rc != 0 then
         exitfunc rc
@@ -906,12 +917,12 @@ function _Advert()
     endif
     //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     if strcmp(tkn$,"ADany")==0 then
-      //extract 2 (#INTstridx# #INTtag#) and store starting at i[1]
+      //Extract 2 (#INTstridx# #INTtag#) and store starting at i[1]
       rc = ExtractIntTokens(urtcmd$,1,2)
       if rc != 0 then
         exitfunc rc
       endif
-      //extract 1 (#HEXdata$#) and store starting at s[1]
+      //Extract 1 (#HEXdata$#) and store starting at s[1]
       rc = ExtractStrTokens(urtcmd$,1,1)
       if rc != 0 then
         exitfunc rc
@@ -921,7 +932,7 @@ function _Advert()
     endif
     //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     if strcmp(tkn$,"commit")==0 then
-      //extract 2 (#INTstridx0# #INTstridx1#) and store starting at i[1]
+      //Extract 2 (#INTstridx0# #INTstridx1#) and store starting at i[1]
       rc = ExtractIntTokens(urtcmd$,1,2)
       if rc != 0 then
         exitfunc rc
@@ -932,7 +943,7 @@ function _Advert()
   endif  
   //=================================================
   if strcmp(tkn$,"undirected")==0 then
-    //extract 3 (#INTintervalms# #INTtimeoutms# #INTfilterpolicy#) and store starting at i[1]
+    //Extract 3 (#INTintervalms# #INTtimeoutms# #INTfilterpolicy#) and store starting at i[1]
     rc = ExtractIntTokens(urtcmd$,1,3)
     if rc != 0 then
       exitfunc rc
@@ -941,7 +952,7 @@ function _Advert()
   endif
   //=================================================
   if strcmp(tkn$,"scan")==0 then
-    //extract 3 (#INTintervalms# #INTtimeoutms# #INTfilterpolicy#) and store starting at i[1]
+    //Extract 3 (#INTintervalms# #INTtimeoutms# #INTfilterpolicy#) and store starting at i[1]
     rc = ExtractIntTokens(urtcmd$,1,3)
     if rc != 0 then
       exitfunc rc
@@ -950,7 +961,7 @@ function _Advert()
   endif
   //=================================================
   if strcmp(tkn$,"nonconn")==0 then
-    //extract 3 (#INTintervalms# #INTtimeoutms# #INTfilterpolicy#) and store starting at i[1]
+    //Extract 3 (#INTintervalms# #INTtimeoutms# #INTfilterpolicy#) and store starting at i[1]
     rc = ExtractIntTokens(urtcmd$,1,3)
     if rc != 0 then
       exitfunc rc
@@ -959,12 +970,12 @@ function _Advert()
   endif
   //=================================================
   if strcmp(tkn$,"directed")==0 then
-    //extract 3 (#INTintervalms# #INTtimeoutms# #INTfilterpolicy#) and store starting at i[1]
+    //Extract 3 (#INTintervalms# #INTtimeoutms# #INTfilterpolicy#) and store starting at i[1]
     rc = ExtractIntTokens(urtcmd$,1,3)
     if rc != 0 then
       exitfunc rc
     endif
-    //extract 1 (#HEXaddr7Bytes#) and store starting at s$[1] which has to be a mac address
+    //Extract 1 (#HEXaddr7Bytes#) and store starting at s$[1] which has to be a mac address
     rc = ExtractStrTokens(urtcmd$,1,1)
     if rc != 0 then
       exitfunc rc
@@ -993,15 +1004,15 @@ function _Scan()
     exitfunc 5
   endif
   if strcmp(tkn$,"stop")==0 then
-    //cancel the connection attempt (release memory)
+    //Cancel the connection attempt (release memory)
     exitfunc BleScanStop()
   endif
   if strcmp(tkn$,"abort")==0 then
-    //cancel the connection attempt (do not release memory)
+    //Cancel the connection attempt (do not release memory)
     exitfunc BleScanAbort()
   endif
   if strcmp(tkn$,"config")==0 then
-    //extract 2 : (cfgID value) and store starting at i[1]
+    //Extract 2 : (cfgID value) and store starting at i[1]
     rc = ExtractIntTokens(urtcmd$,1,2)
     if rc != 0 then
       exitfunc rc
@@ -1009,7 +1020,7 @@ function _Scan()
     exitfunc BleScanConfig(i[1],i[2])  
   endif
   if strcmp(tkn$,"start")==0 then
-    //extract 2 : (scantimeoutms handleFilter) and store starting at i[1]
+    //Extract 2 : (scantimeoutms handleFilter) and store starting at i[1]
     rc = ExtractIntTokens(urtcmd$,1,2)
     if rc != 0 then
       exitfunc rc
@@ -1031,12 +1042,12 @@ function _Connect()
   endif
   //=================================================
   if strcmp(tkn$,"cancel")==0 then
-    //cancel the connection attempt
+    //Cancel the connection attempt
     exitfunc BleConnectCancel()
   endif
   //=================================================
   if strcmp(tkn$,"config")==0 then
-    //extract 2 : (#INTcfgID# #INTvalue#) and store starting at i[1]
+    //Extract 2 : (#INTcfgID# #INTvalue#) and store starting at i[1]
     rc = ExtractIntTokens(urtcmd$,1,2)
     if rc != 0 then
       exitfunc rc
@@ -1045,7 +1056,7 @@ function _Connect()
   endif
   //=================================================
   if strcmp(tkn$,"connparms")==0 then
-    //extract 5 : (#INTconnHandle# #INTminConnIntMs# #INTmaxConnIntMs# #INTsprvsnToutMs# #INTslavelatency#) and store starting at i[1]
+    //Extract 5 : (#INTconnHandle# #INTminConnIntMs# #INTmaxConnIntMs# #INTsprvsnToutMs# #INTslavelatency#) and store starting at i[1]
     rc = ExtractIntTokens(urtcmd$,1,5)
     if rc != 0 then
       exitfunc rc
@@ -1054,12 +1065,12 @@ function _Connect()
   endif
   
   //=================================================
-  //the current token has to be a mac address
+  //The current token has to be a mac address
   s$[1]=StrDehexize$(tkn$)
   if strlen(s$[1]) != 7 then
     exitfunc 5
   endif
-  //extract 4 : (conntimeoutms minConnIntMs maxConnIntMs sprvsnToutMs) and store starting at i[1]
+  //Extract 4 : (conntimeoutms minConnIntMs maxConnIntMs sprvsnToutMs) and store starting at i[1]
   rc = ExtractIntTokens(urtcmd$,1,4)
   if rc != 0 then
     exitfunc rc
@@ -1070,9 +1081,9 @@ endfunc BleConnect(s$[1],i[1],i[2],i[3],i[4])
 //#CMD#//  disconnect #INTconnHandle#
 //-------------------------------------------------------------------------
 function _Disconnect()  
-  // extract the optional handle
+  //Extract the optional handle
   tlen = ExtractIntToken(urtcmd$,i[1])
-  // handle was supplied
+  //Handle was supplied
 endfunc BleDisconnect(hc[i[1]])
 
 //-------------------------------------------------------------------------
@@ -1086,7 +1097,7 @@ function _uuid()
     exitfunc 5
   endif
   if strcmp(tkn$,"sig")==0 then
-    //extract 1 (#INT16bitUuid#) and store starting at i[1]
+    //Extract 1 (#INT16bitUuid#) and store starting at i[1]
     rc = ExtractIntTokens(urtcmd$,1,1)
     if rc != 0 then
       exitfunc rc
@@ -1096,7 +1107,7 @@ function _uuid()
     exitfunc 0
   endif
   if strcmp(tkn$,"custom")==0 then
-    //extract 1 (#HEX32hexChrs#) and store starting at s$[1]
+    //Extract 1 (#HEX32hexChrs#) and store starting at s$[1]
     tlen = ExtractStrToken(urtcmd$,tkn$)
     if tlen == 0 then
       exitfunc 5
@@ -1110,7 +1121,7 @@ function _uuid()
     exitfunc 0
   endif
   if strcmp(tkn$,"sibling")==0 then
-    //extract 2 (#INTuuidHandle# #INT16bitUuid#) and store starting at i[1]
+    //Extract 2 (#INTuuidHandle# #INT16bitUuid#) and store starting at i[1]
     rc = ExtractIntTokens(urtcmd$,1,2)
     if rc != 0 then
       exitfunc rc
@@ -1147,7 +1158,7 @@ function _Gattc()
   endif
   //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   if strcmp(tkn$,"open")==0 then
-    //extract 2 (#INTbuflen# #INTflags#) and store starting at i[1]
+    //Extract 2 (#INTbuflen# #INTflags#) and store starting at i[1]
     rc = ExtractIntTokens(urtcmd$,1,2)
     if rc != 0 then
       exitfunc rc
@@ -1156,7 +1167,7 @@ function _Gattc()
   endif
   //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   if strcmp(tkn$,"close")==0 then
-    //no parms to extract
+    //No parms to extract
     BleGattcClose()
     exitfunc 0
   endif
@@ -1170,7 +1181,7 @@ function _Gattc()
       exitfunc 5
     endif  
     if strcmp(tkn$,"first")==0 then
-      //extract 3 (#INTconnHandle# #INTstartAttrHandle# #INTsvcUuidHandle#) and store starting at i[1]
+      //Extract 3 (#INTconnHandle# #INTstartAttrHandle# #INTsvcUuidHandle#) and store starting at i[1]
       rc = ExtractIntTokens(urtcmd$,1,3)
       if rc != 0 then
         exitfunc rc
@@ -1178,7 +1189,7 @@ function _Gattc()
       exitfunc BleDiscServiceFirst(hc[i[1]],i[2],i[3])
     endif
     if strcmp(tkn$,"next")==0 then
-      //extract 1 (#INTconnHandle#) and store starting at i[1]
+      //Extract 1 (#INTconnHandle#) and store starting at i[1]
       rc = ExtractIntTokens(urtcmd$,1,1)
       if rc != 0 then
         exitfunc rc
@@ -1196,7 +1207,7 @@ function _Gattc()
       exitfunc 5
     endif  
     if strcmp(tkn$,"first")==0 then
-      //extract 4 (#INTconnHandle# #INTuuidHandle# #INTsvcStartAttrHandle# #INTsvcEndAttrHandle#) and store starting at i[1]
+      //Extract 4 (#INTconnHandle# #INTuuidHandle# #INTsvcStartAttrHandle# #INTsvcEndAttrHandle#) and store starting at i[1]
       rc = ExtractIntTokens(urtcmd$,1,4)
       if rc != 0 then
         exitfunc rc
@@ -1204,7 +1215,7 @@ function _Gattc()
       exitfunc BleDiscCharFirst(hc[i[1]],i[2],i[3],i[4])
     endif
     if strcmp(tkn$,"next")==0 then
-      //extract 1 (#INTconnHandle#) and store starting at i[1]
+      //Extract 1 (#INTconnHandle#) and store starting at i[1]
       rc = ExtractIntTokens(urtcmd$,1,1)
       if rc != 0 then
         exitfunc rc
@@ -1222,7 +1233,7 @@ function _Gattc()
       exitfunc 5
     endif  
     if strcmp(tkn$,"first")==0 then
-      //extract 3 (#INTconnHandle# #INTuuidHandle# #INTcharStartAttrHandle#) and store starting at i[1]
+      //Extract 3 (#INTconnHandle# #INTuuidHandle# #INTcharStartAttrHandle#) and store starting at i[1]
       rc = ExtractIntTokens(urtcmd$,1,3)
       if rc != 0 then
         exitfunc rc
@@ -1230,7 +1241,7 @@ function _Gattc()
       exitfunc BleDiscDescFirst(hc[i[1]],i[2],i[3])
     endif
     if strcmp(tkn$,"next")==0 then
-      //extract 1 (#INTconnHandle#) and store starting at i[1]
+      //Extract 1 (#INTconnHandle#) and store starting at i[1]
       rc = ExtractIntTokens(urtcmd$,1,1)
       if rc != 0 then
         exitfunc rc
@@ -1240,7 +1251,7 @@ function _Gattc()
   endif
   //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   if strcmp(tkn$,"findchar")==0 then
-    //extract 5 (#INTconnHandle# #INTsvcUuidHandle# #INTsvcIndex# #INTcharUuidHandle# #INTcharIndex#) and store starting at i[1]
+    //Extract 5 (#INTconnHandle# #INTsvcUuidHandle# #INTsvcIndex# #INTcharUuidHandle# #INTcharIndex#) and store starting at i[1]
     rc = ExtractIntTokens(urtcmd$,1,5)
     if rc != 0 then
       exitfunc rc
@@ -1249,7 +1260,7 @@ function _Gattc()
   endif
   //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   if strcmp(tkn$,"finddesc")==0 then
-    //extract 7 (#INTconnHandle# #INTsvcUuidHandle# #INTsvcIndex# #INTcharUuidHandle# #INTcharIndex# #INTdescUuidHandle# #INTdescIndex#) and store starting at i[1]
+    //Extract 7 (#INTconnHandle# #INTsvcUuidHandle# #INTsvcIndex# #INTcharUuidHandle# #INTcharIndex# #INTdescUuidHandle# #INTdescIndex#) and store starting at i[1]
     rc = ExtractIntTokens(urtcmd$,1,7)
     if rc != 0 then
       exitfunc rc
@@ -1261,7 +1272,7 @@ function _Gattc()
     if gcState!=0 then
       exitfunc 8
     endif
-    //extract 1 (#INTconnHandle#) and store starting at i[1]
+    //Extract 1 (#INTconnHandle#) and store starting at i[1]
     rc = ExtractIntTokens(urtcmd$,1,1)
     if rc != 0 then
       exitfunc rc
@@ -1270,7 +1281,7 @@ function _Gattc()
   endif
   //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   if strcmp(tkn$,"read")==0 then
-    //extract 3 (#INTconnHandle# #INTattrHandle# #INToffset#) and store starting at i[1]
+    //Extract 3 (#INTconnHandle# #INTattrHandle# #INToffset#) and store starting at i[1]
     rc = ExtractIntTokens(urtcmd$,1,3)
     if rc != 0 then
       exitfunc rc
@@ -1286,13 +1297,13 @@ function _Gattc()
     cmdid=2
   endif
   if cmdId != 0 then
-    //extract 3 (#INTconnHandle# #INTattrHandle# #HEXdata#) and store starting at i[1]
+    //Extract 3 (#INTconnHandle# #INTattrHandle# #HEXdata#) and store starting at i[1]
     rc = ExtractIntTokens(urtcmd$,1,2)
     if rc != 0 then
       exitfunc rc
     endif
     if cmdid==1 then
-      //extract 1 (#HEXdata#) and store starting at s$[1]
+      //Extract 1 (#HEXdata#) and store starting at s$[1]
       tlen = ExtractStrToken(urtcmd$,s$[1])
       if tlen == 0 then
         exitfunc 5
@@ -1300,7 +1311,7 @@ function _Gattc()
       s$[1]=StrDehexize$(s$[1])
       tlen = strlen(s$[1])
     else
-      //extract 1 (#STRdata#) and store starting at s$[1]
+      //Extract 1 (#STRdata#) and store starting at s$[1]
       tlen = ExtractStrToken(urtcmd$,s$[1])
     endif
     if tlen<1  then
@@ -1322,13 +1333,13 @@ function _Gattc()
     cmdid=0x12
   endif
   if cmdId != 0 then
-    //extract 3 (#INTconnHandle# #INTattrHandle# #HEXdata#) and store starting at i[1]
+    //Extract 3 (#INTconnHandle# #INTattrHandle# #HEXdata#) and store starting at i[1]
     rc = ExtractIntTokens(urtcmd$,1,2)
     if rc != 0 then
       exitfunc rc
     endif
     if (cmdid & 0xF)==1 then
-      //extract 1 (#HEXdata#) and store starting at s$[1]
+      //Extract 1 (#HEXdata#) and store starting at s$[1]
       tlen = ExtractStrToken(urtcmd$,s$[1])
       if tlen == 0 then
         exitfunc 5
@@ -1336,7 +1347,7 @@ function _Gattc()
       s$[1]=StrDehexize$(s$[1])
       tlen = strlen(s$[1])
     else
-      //extract 1 (#STRdata#) and store starting at s$[1]
+      //Extract 1 (#STRdata#) and store starting at s$[1]
       tlen = ExtractStrToken(urtcmd$,s$[1])
     endif
     if tlen<1  then
@@ -1386,7 +1397,7 @@ function _Gatts()
     endif
     //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     if strcmp(tkn$,"new")==0 then
-      //extract 3 (#INTtype# #INThUuid# #INTstoreIndex#) and store starting at i[1]
+      //Extract 3 (#INTtype# #INThUuid# #INTstoreIndex#) and store starting at i[1]
       rc = ExtractIntTokens(urtcmd$,1,3)
       if rc != 0 then
         exitfunc rc
@@ -1395,7 +1406,7 @@ function _Gatts()
     endif
     //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     if strcmp(tkn$,"commit")==0 then
-      //extract 1 (#INTstoreIndex#) and store starting at i[1]
+      //Extract 1 (#INTstoreIndex#) and store starting at i[1]
       rc = ExtractIntTokens(urtcmd$,1,1)
       if rc != 0 then
         exitfunc rc
@@ -1404,13 +1415,13 @@ function _Gatts()
     endif
     //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     if strcmp(tkn$,"gap")==0 then
-      //extract 1 (#STRescaped_devname#) and store starting at s$[1]
+      //Extract 1 (#STRescaped_devname#) and store starting at s$[1]
       rc = ExtractStrTokens(urtcmd$,1,1)
       if rc != 0 then
         exitfunc rc
       endif
       StrDeEscape(s$[1])
-      //extract 6 (#INTwritable# #INTappearance# #INTminconnintus# #INTmaxconnintus# #INTsprtmoutus# #INTslavelatency#) and store starting at i[1]
+      //Extract 6 (#INTwritable# #INTappearance# #INTminconnintus# #INTmaxconnintus# #INTsprtmoutus# #INTslavelatency#) and store starting at i[1]
       rc = ExtractIntTokens(urtcmd$,1,6)
       if rc != 0 then
         exitfunc rc
@@ -1424,7 +1435,7 @@ function _Gatts()
   endif
   //=================================================
   if strcmp(tkn$,"attrmetadata")==0 then
-    //extract 5 (#INTmdindex# #INTreadrights# #INTwriterights# #INTmaxdatalen# #INTvlen#) and store starting at i[0]
+    //Extract 5 (#INTmdindex# #INTreadrights# #INTwriterights# #INTmaxdatalen# #INTvlen#) and store starting at i[0]
     rc = ExtractIntTokens(urtcmd$,0,5)
     if rc != 0 then
       exitfunc rc
@@ -1440,7 +1451,7 @@ function _Gatts()
     endif
     //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     if strcmp(tkn$,"new")==0 then
-      //extract 5 (#INTcharprops# #INThuuid# #INTmdvalidx# #INTmdcccdidx# #INTmdsccdidx#) and store starting at i[1]
+      //Extract 5 (#INTcharprops# #INThuuid# #INTmdvalidx# #INTmdcccdidx# #INTmdsccdidx#) and store starting at i[1]
       rc = ExtractIntTokens(urtcmd$,1,5)
       if rc != 0 then
         exitfunc rc
@@ -1449,12 +1460,12 @@ function _Gatts()
     endif
     //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     if strcmp(tkn$,"descuserdesc")==0 then
-      //extract 1 (#STRuserdesc$#) and store starting at s$[1]
+      //Extract 1 (#STRuserdesc$#) and store starting at s$[1]
       rc = ExtractStrTokens(urtcmd$,1,1)
       if rc != 0 then
         exitfunc rc
       endif
-      //extract 1 (#INTmduseridx#) and store starting at i[1]
+      //Extract 1 (#INTmduseridx#) and store starting at i[1]
       rc = ExtractStrTokens(urtcmd$,1,1)
       if rc != 0 then
         exitfunc rc
@@ -1463,7 +1474,7 @@ function _Gatts()
     endif
     //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     if strcmp(tkn$,"descprstnfrmt")==0 then
-      //extract 5 (#INTformat# #INTexponent# #INTunit# #INTnamespace# #INTnsdesc#) and store starting at i[1]
+      //Extract 5 (#INTformat# #INTexponent# #INTunit# #INTnamespace# #INTnsdesc#) and store starting at i[1]
       rc = ExtractIntTokens(urtcmd$,1,5)
       if rc != 0 then
         exitfunc rc
@@ -1472,12 +1483,12 @@ function _Gatts()
     endif
     //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     if strcmp(tkn$,"descadd")==0 then
-      //extract 1 (#STRattr$#) and store starting at s$[1]
+      //Extract 1 (#STRattr$#) and store starting at s$[1]
       rc = ExtractStrTokens(urtcmd$,1,1)
       if rc != 0 then
         exitfunc rc
       endif
-      //extract 2 (#INThuuid# #INTmddescidx#) and store starting at i[1]
+      //Extract 2 (#INThuuid# #INTmddescidx#) and store starting at i[1]
       rc = ExtractStrTokens(urtcmd$,1,2)
       if rc != 0 then
         exitfunc rc
@@ -1486,12 +1497,12 @@ function _Gatts()
     endif
     //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     if strcmp(tkn$,"commit")==0 then
-      //extract 1 (#STRattr$#) and store starting at s$[1]
+      //Extract 1 (#STRattr$#) and store starting at s$[1]
       rc = ExtractStrTokens(urtcmd$,1,1)
       if rc != 0 then
         exitfunc rc
       endif
-      //extract 2 (#INThsvcidx# #INTcharhandleidx#) and store starting at i[1]
+      //Extract 2 (#INThsvcidx# #INTcharhandleidx#) and store starting at i[1]
       rc = ExtractStrTokens(urtcmd$,1,2)
       if rc != 0 then
         exitfunc rc
@@ -1500,12 +1511,12 @@ function _Gatts()
     endif
     //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     if strcmp(tkn$,"read")==0 then
-      //extract 1 (#INTcharhandleidx#) and store starting at i[1]
+      //Extract 1 (#INTcharhandleidx#) and store starting at i[1]
       rc = ExtractStrTokens(urtcmd$,1,1)
       if rc != 0 then
         exitfunc rc
       endif
-      //extract 1 (#STRattr$#) and store starting at s$[1]
+      //Extract 1 (#STRattr$#) and store starting at s$[1]
       rc = ExtractStrTokens(urtcmd$,1,1)
       if rc != 0 then
         exitfunc rc
@@ -1514,12 +1525,12 @@ function _Gatts()
     endif
     //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     if strcmp(tkn$,"write")==0 then
-      //extract 1 (#INTcharhandleidx#) and store starting at i[1]
+      //Extract 1 (#INTcharhandleidx#) and store starting at i[1]
       rc = ExtractStrTokens(urtcmd$,1,1)
       if rc != 0 then
         exitfunc rc
       endif
-      //extract 1 (#STRattr$#) and store starting at s$[1]
+      //Extract 1 (#STRattr$#) and store starting at s$[1]
       rc = ExtractStrTokens(urtcmd$,1,1)
       if rc != 0 then
         exitfunc rc
@@ -1528,12 +1539,12 @@ function _Gatts()
     endif
     //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     if strcmp(tkn$,"Notify")==0 then
-      //extract 1 (#INTcharhandleidx#) and store starting at i[1]
+      //Extract 1 (#INTcharhandleidx#) and store starting at i[1]
       rc = ExtractStrTokens(urtcmd$,1,1)
       if rc != 0 then
         exitfunc rc
       endif
-      //extract 1 (#STRattr$#) and store starting at s$[1]
+      //Extract 1 (#STRattr$#) and store starting at s$[1]
       rc = ExtractStrTokens(urtcmd$,1,1)
       if rc != 0 then
         exitfunc rc
@@ -1542,12 +1553,12 @@ function _Gatts()
     endif
     //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     if strcmp(tkn$,"indicate")==0 then
-      //extract 1 (#INTcharhandleidx#) and store starting at i[1]
+      //Extract 1 (#INTcharhandleidx#) and store starting at i[1]
       rc = ExtractStrTokens(urtcmd$,1,1)
       if rc != 0 then
         exitfunc rc
       endif
-      //extract 1 (#STRattr$#) and store starting at s$[1]
+      //Extract 1 (#STRattr$#) and store starting at s$[1]
       rc = ExtractStrTokens(urtcmd$,1,1)
       if rc != 0 then
         exitfunc rc
@@ -1556,12 +1567,12 @@ function _Gatts()
     endif
     //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     if strcmp(tkn$,"descread")==0 then
-      //extract 5 (#INTcharhandleidx# #INTdeschandle# #INToffset# #INTlength# #INTdescuuidhandle#) and store starting at i[1]
+      //Extract 5 (#INTcharhandleidx# #INTdeschandle# #INToffset# #INTlength# #INTdescuuidhandle#) and store starting at i[1]
       rc = ExtractStrTokens(urtcmd$,1,5)
       if rc != 0 then
         exitfunc rc
       endif
-      //extract 1 (#STRattr$#) and store starting at s$[1]
+      //Extract 1 (#STRattr$#) and store starting at s$[1]
       rc = ExtractStrTokens(urtcmd$,1,1)
       if rc != 0 then
         exitfunc rc
@@ -1589,7 +1600,7 @@ function _BlePair()
         
     //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     if strcmp(tkn$,"keysize")==0 then
-        //extract 2 (#INTminsize# #INTmaxsize#) and store starting at i[1]
+        //Extract 2 (#INTminsize# #INTmaxsize#) and store starting at i[1]
         rc = ExtractIntTokens(urtcmd$,1,2)
         if rc != 0 then
             exitfunc rc
@@ -1599,7 +1610,7 @@ function _BlePair()
     
     //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     if strcmp(tkn$,"iocap")==0 then
-        //extract 1 (#INTiocap#) and store starting at i[1]
+        //Extract 1 (#INTiocap#) and store starting at i[1]
         rc = ExtractIntTokens(urtcmd$,1,1)
         if rc != 0 then
             exitfunc rc
@@ -1609,7 +1620,7 @@ function _BlePair()
     
     //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     if strcmp(tkn$,"justworks")==0 then
-        //extract 1 (#INTJWConf#) and store starting at i[1]
+        //Extract 1 (#INTJWConf#) and store starting at i[1]
         rc = ExtractIntTokens(urtcmd$,1,1)
         if rc != 0 then
             exitfunc rc
@@ -1619,7 +1630,7 @@ function _BlePair()
     
     //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     if strcmp(tkn$,"passkey")==0 then
-        //extract 2 (#INTconnHandle# #INTpasscode#) and store starting at i[1]
+        //Extract 2 (#INTconnHandle# #INTpasscode#) and store starting at i[1]
         rc = ExtractIntTokens(urtcmd$,1,2)
         if rc != 0 then
             exitfunc rc
@@ -1629,7 +1640,7 @@ function _BlePair()
 
     //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     if strcmp(tkn$,"bondreq")==0 then
-        //extract 1 (#INTbondreq#) and store starting at i[1]
+        //Extract 1 (#INTbondreq#) and store starting at i[1]
         rc = ExtractIntTokens(urtcmd$,1,1)
         if rc != 0 then
             exitfunc rc
@@ -1639,7 +1650,7 @@ function _BlePair()
     
     // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     if strcmp(tkn$,"accept")==0 then
-        //extract 2 (#INTconnHandle# #INTaccept#) and store starting at i[1]
+        //Extract 2 (#INTconnHandle# #INTaccept#) and store starting at i[1]
         rc = ExtractIntTokens(urtcmd$,1,2)
         if rc != 0 then
             exitfunc rc
@@ -1648,10 +1659,10 @@ function _BlePair()
     endif
     
     // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-    //store the connection handle
+    //Store the connection handle
     i[1] = StrValDec(tkn$)
         
-    // extract 1 (#INTenablebonding#) and store starting at i[2]
+    //Extract 1 (#INTenablebonding#) and store starting at i[2]
     rc = ExtractIntTokens(urtcmd$,2,1)
     if rc != 0 then
         exitfunc rc
@@ -1664,7 +1675,7 @@ endfunc 5
 //------------------------------------------------------------------------------
 function _BleEncrypt()
     //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-    //extract 3 (#INTconnHandle# #INTminLtkSize# #INTmitmRequired#) and store starting at i[1]
+    //Extract 3 (#INTconnHandle# #INTminLtkSize# #INTmitmRequired#) and store starting at i[1]
     rc = ExtractIntTokens(urtcmd$,1,3)
     if rc != 0 then
         exitfunc rc
@@ -1672,9 +1683,9 @@ function _BleEncrypt()
     exitfunc BleEncryptConnection(hc[i[1]], i[2], i[3])
 endfunc 5
 
-// ble encrypt #INTconnHandle# #INTminLtkSize# #INTmitmRequired#
-//minLtkSize = minimum long term key size (7-16)
-//mitmRequired = set to 1 to enable MITM protection
+//ble encrypt #INTconnHandle# #INTminLtkSize# #INTmitmRequired#
+//minLtkSize = Minimum long term key size (7-16)
+//mitmRequired = Set to 1 to enable MITM protection
 
 // -------------------------------------------------------------------------
 // #CMD#//  ble bond stats
@@ -1697,7 +1708,7 @@ function _BleBond()
         
     // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ 
     elseif strcmp(tkn$,"persistkey")==0 then
-        //extract 1 : (#HEXaddr7Bytes#) and store at i[1])
+        //Extract 1 : (#HEXaddr7Bytes#) and store at i[1])
         rc = ExtractStrTokens(urtcmd$,1,1)
         if rc != 0 then
             exitfunc rc
@@ -1707,7 +1718,7 @@ function _BleBond()
     
     // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     elseif strcmp(tkn$,"getinfo")==0 then
-        //extract 1 : (#INTindex#) and store at i[1])
+        //Extract 1 : (#INTindex#) and store at i[1])
         rc = ExtractIntTokens(urtcmd$,1,1)
         if rc != 0 then
             exitfunc rc
@@ -1721,7 +1732,7 @@ function _BleBond()
     
     // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     elseif strcmp(tkn$,"erasekey")==0 then
-        //extract 1 : (#HEXaddr7Bytes#) and store at i[1])
+        //Extract 1 : (#HEXaddr7Bytes#) and store at i[1])
         rc = ExtractStrTokens(urtcmd$,1,1)
         if rc != 0 then
             exitfunc rc
@@ -1790,7 +1801,7 @@ function _Misc()
     endif  
     //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     if strcmp(tkn$,"set")==0 then
-      //extract 1 (#INTidx#) and store starting at i[1]
+      //Extract 1 (#INTidx#) and store starting at i[1]
       rc = ExtractIntTokens(urtcmd$,1,1)
       if rc != 0 then
         exitfunc rc
@@ -1798,7 +1809,7 @@ function _Misc()
       if (i[1] < 0) || (i[1] >= NUM_OF_S_PARAMS) then 
         exitfunc 6
       endif
-      //extract 1 (#STRescapedvalue#) and store starting at s$[1]
+      //Extract 1 (#STRescapedvalue#) and store starting at s$[1]
       rc = ExtractStrTokens(urtcmd$,i[1],1)
       if rc != 0 then
         exitfunc rc
@@ -1854,7 +1865,7 @@ function _Uart()
   endif
   //=================================================
   if strcmp(tkn$,"set")==0 then
-    //extract 1 (#INTnewspeed#) and store starting at i[1]
+    //Extract 1 (#INTnewspeed#) and store starting at i[1]
     rc = ExtractIntTokens(urtcmd$,1,1)
     if rc != 0 then
       exitfunc rc
@@ -1894,8 +1905,8 @@ endfunc 5
 //==============================================================================
 //==============================================================================
 function OnUartCmd() as integer
-  rc=-2 //default response is ">"
-  tlen = ExtractStrToken(urtcmd$,tkn$) //get first token
+  rc=-2 //Default response is ">"
+  tlen = ExtractStrToken(urtcmd$,tkn$) //Get first token
   if tlen > 0 then
     
     if strcmp(tkn$,"advert")==0 then
@@ -1950,7 +1961,7 @@ function OnUartCmd() as integer
         rc=-4 
     endif
   endif
-  // send a response back to the user
+  //Send a response back to the user
   UartRsp(rc)
 endfunc 1
 
@@ -1965,11 +1976,11 @@ function HandlerUartRxCmd() as integer
   dim nMatch
   
   if urts < 0 then
-    //uart parser is suspended
+    //Uart parser is suspended
     exitfunc 1
   endif
 
-  //check if CR has been received
+  //Check if CR has been received
   nMatch=UartReadMatch(stRsp$,13)
   if nMatch!=0 then
     //CR exists in the input buffer
@@ -2000,12 +2011,12 @@ endfunc 1
 //==============================================================================
 function HandlerUartRxVsp() as integer
     //print "\nuart vsp: "
-    //just write to the VSP service
+    //Just write to the VSP service
     if vsplen==0 then
         vsplen  = UartReadN(vdta$, VSP_MAX_CHARDATA_LEN )
         //print vdta$
         if vsplen > 0 then
-            //process '^' if sent
+            //Process '^' if sent
             if StrCmp(vdta$,"^")==0 then
                 vsplen=0
                 vdta$=""
@@ -2023,7 +2034,7 @@ function HandlerUartRxVsp() as integer
                 endif
                 
             else
-                //can send to the VSP service in the peripheral
+                //Can send to the VSP service in the peripheral
                 rc=BleGattcWriteCmd(hcVsp,vspRxH,vdta$)
                 //print vdta$
                 vdta$=""
@@ -2049,9 +2060,9 @@ function HandlerBleMsg(BYVAL nMsgId AS INTEGER, BYVAL nCtx AS INTEGER) as intege
       rc = BleDisconnect(nCtx)
       print " DROPPED"
     else
-      //accepted so display connection parameters
+      //Accepted so display connection parameters
       ShowConnParms(nCtx)
-      //always assume most recent connection for VSP
+      //Always assume most recent connection for VSP
       hcVsp = hc[hz]
     endif
 
@@ -2108,23 +2119,18 @@ function HandlerAdvRpt() as integer
   endwhile
 endfunc 1
 
-
 //==============================================================================
 // This handler is called when there is a connection attempt timeout
 //==============================================================================
 function HandlerBlrConnTimOut() as integer
-
   DbgMsg( "\nConnection attempt stopped via timeout" )
-
 endfunc 1
 
 //==============================================================================
 // This handler is called when there is a scan attempt timeout
 //==============================================================================
 function HandlerBlrScanTimOut() as integer
-
   DbgMsg( "\nScanning stopped via timeout" )
-
 endfunc 1
 
 //==============================================================================
@@ -2149,17 +2155,17 @@ function HandlerPrimSvc(hConn,hUuid,hStart,hEnd) as integer
     print "hConn=";integer.h' hConn;",hUuid=";integer.h' hUuid
     print ",hStart=";hStart;",hEnd=";hEnd;")"
     
-  case 1  //tablemapping
+  case 1  //Tablemapping
     if hStart!=0 then
-      // S: hStart,(hEnd),hUuid
+      //S: hStart,(hEnd),hUuid
       print "\nS:";hStart;" ,(";hEnd;") ,";integer.h' hUuid
-      // and get all characteristics of this service
+      //And get all characteristics of this service
       rc=BleDiscCharFirst(hConn,0,hStart,hEnd)
       if rc!=0 then
         TerminateTableMap(rc)
       endif
     else
-      //reached end of remote gatt table
+      //Reached end of remote gatt table
       TerminateTableMap(0)
     endif
     
@@ -2176,17 +2182,17 @@ function HandlerCharDisc(hConn,hUuid,cProp,hVal,hiUuid) as integer
     print "hConn=";integer.h' hConn;",hCharUuid=";integer.h' hUuid;",hIncUuid=";hiUuid
     print ",hVal=";hVal;",Props=";integer.h' cProp;")"
     
-  case 1  //tablemapping
+  case 1  //Tablemapping
     if hVal!=0 then
-      // C: hVal,cProp,hUuid,hiUuid
+      //C: hVal,cProp,hUuid,hiUuid
       print "\n C:";hVal;" ,";integer.h' cProp;" ,";integer.h' hUuid;" ,";hiUuid
-      // and get all descriptors of this characteristics
+      //And get all descriptors of this characteristics
       rc=BleDiscDescFirst(hConn,0,hVal)
       if rc!=0 then
         TerminateTableMap(rc)
       endif
     else
-      //no more chars in this service, so go for next service
+      //No more chars in this service, so go for next service
       rc = BleDiscServiceNext(hConn)
       if rc!=0 then
         TerminateTableMap(rc)
@@ -2205,15 +2211,15 @@ function HandlerDescDisc(hConn,hUuid,hDesc) as integer
     print "\nEVDISCDESC("
     print "hConn=";integer.h' hConn;",hDescUuid=";integer.h' hUuid;",hDesc=";hDesc;")"
     
-  case 1  //tablemapping
+  case 1  //Tablemapping
     if hDesc!=0 then
-      // D: hDesc,hUuid
+      //D: hDesc,hUuid
       print "\n  D:";hDesc;" ,";integer.h' hUuid
     endif
-    // and get all descriptors of this characteristics
+    //And get all descriptors of this characteristics
     rc=BleDiscDescNext(hConn)
     if rc!=0 then
-      //no more descc in this char, so go for next char
+      //No more descc in this char, so go for next char
       rc = BleDiscCharNext(hConn)
       if rc!=0 then
         rc = BleDiscServiceNext(hConn)
@@ -2262,42 +2268,42 @@ function HandlerAttrRead(hConn,hAttr,nSts) as integer
   endif        
 endfunc 1
 
-'//==============================================================================
-'// This handler is called when there is a EVCHARVAL message
-'//==============================================================================
+//==============================================================================
+// This handler is called when there is a EVCHARVAL message
+//==============================================================================
 function HandlerCharVal(BYVAL hChar AS INTEGER, byval offset, byval len) as integer
   print "\nEVCHARVAL(hChar=";integer.h' hChar;",offset=";offset;",len=";len;")"
 endfunc 1
 
-'//==============================================================================
-'// This handler is called when there is a CHARHVC message
-'//==============================================================================
+//==============================================================================
+// This handler is called when there is a CHARHVC message
+//==============================================================================
 function HandlerCharHvc(BYVAL hChar AS INTEGER) as integer
     print "\nEVCHARHVC(hChar=";integer.h' hChar;")"
 endfunc 1
 
-'//==============================================================================
-'// This handler is called when there is a CHARCCCD message
-'//==============================================================================
+//==============================================================================
+// This handler is called when there is a CHARCCCD message
+//==============================================================================
 function HandlerCharCccd(BYVAL hChar AS INTEGER, BYVAL nVal AS INTEGER) as integer
   print "\nEVCHARCCCD(hChar=";integer.h' hChar;",value=";nVal;")"
 endfunc 1
 
-'//==============================================================================
-'// This handler is called when there is a CHARSCCD message
-'//==============================================================================
+//==============================================================================
+// This handler is called when there is a CHARSCCD message
+//==============================================================================
 function HandlerCharSccd(BYVAL hChar AS INTEGER, BYVAL nVal AS INTEGER) as integer
   print "\nEVCHARSCCD(hChar=";integer.h' hChar;",value=";nVal;")"
 endfunc 1
 
-'//==============================================================================
-'// This handler is called when there is a CHARDESC message
-'//==============================================================================
+//==============================================================================
+// This handler is called when there is a CHARDESC message
+//==============================================================================
 function HandlerCharDesc(BYVAL hChar AS INTEGER, BYVAL hDesc AS INTEGER) as integer
   dim duid,a$,rc
   print "\nEVCHARDESC(hChar=";integer.h' hChar;",hDesc=";integer.h' hDesc;")"    
 
-  //read the descriptor data
+  //Read the descriptor data
   rc = BleCharDescRead(hChar,hDesc,0,512,duid,a$)
   print "\n > BleCharDescRead (0,512) = "
   print "hUuid=";integer.h' duid;",data=";StrHexize$(a$);",len=";StrLen(a$);") returned ";integer.h' rc
@@ -2329,7 +2335,7 @@ function HandlerAttrNtfyVsp() as integer
       if vspTxH == hAttr then
         print att$
       else
-        //print "\n >BleGattcNotifyRead("
+        //Print "\n >BleGattcNotifyRead("
         print "hConn=";integer.h' hConn;",handle=";hAttr;",Dumped=";dscd
         print ",data=";StrHexize$(att$);")"
       endif
@@ -2337,24 +2343,23 @@ function HandlerAttrNtfyVsp() as integer
   dowhile rc==0
 endfunc 1
 
-'//==============================================================================
-'// When WriteCmd or a Notify has been sent and baseband confirmed
-'//==============================================================================
+//==============================================================================
+// When WriteCmd or a Notify has been sent and baseband confirmed
+//==============================================================================
 function HandlerNotifyBufCmd() as integer
   print "\nEVNOTIFYBUF"
 endfunc 1
 
-'//==============================================================================
-'// When WriteCmd or a Notify has been sent and baseband confirmed
-'//==============================================================================
+//==============================================================================
+// When WriteCmd or a Notify has been sent and baseband confirmed
+//==============================================================================
 function HandlerNotifyBufVsp() as integer
   vsplen=0
 endfunc HandlerUartRxVsp()
 
-
-'//==============================================================================
-'// Called when the state of sio28 changes. Connected to DTR output of PC
-'//==============================================================================
+//==============================================================================
+// Called when the state of sio28 changes. Connected to DTR output of PC
+//==============================================================================
 function HandlerSio28() as integer
   if GpioRead(28) then
     //DTR Deasserted so NOT command mode
@@ -2372,9 +2377,9 @@ function HandlerSio28() as integer
 endfunc 1
 
 //* Using this instead of HandlerSio28 to switch modes
-'//==============================================================================
-'// Called after SendMsgApp is called. Used to switch between command and bridge mode
-'//==============================================================================
+//==============================================================================
+// Called after SendMsgApp is called. Used to switch between command and bridge mode
+//==============================================================================
 function SetMode(msgID, cmd) as integer
     if cmd==BRIDGE_VSP_MODE then
         //DTR Deasserted so NOT command mode
@@ -2386,7 +2391,7 @@ function SetMode(msgID, cmd) as integer
         endif
         
     elseif cmd==CMD_MODE then
-        OnSetModeCmd()      //let sblib handle it first
+        OnSetModeCmd()      //Let sblib handle it first
         //DTR Deasserted so command mode
         OnEvent  EVUARTRX       call HandlerUartRxCmd
         Onevent  EVNOTIFYBUF    call HandlerNotifyBufCmd
@@ -2396,10 +2401,10 @@ function SetMode(msgID, cmd) as integer
 
     elseif cmd==BRIDGE_SPP_MODE then
         if conns>0 then
-            OnSetModeSpp()      //let sblib handle it first
-            OnEvent  EVUARTRX                call HandlerUartRxSpp
-            Onevent  EVNOTIFYBUF             call HandlerNotifyBufCmd
-            OnEvent  EVATTRNOTIFY            call HandlerAttrNtfyCmd
+            OnSetModeSpp()  //Let sblib handle it first
+            OnEvent  EVUARTRX     call HandlerUartRxSpp
+            Onevent  EVNOTIFYBUF  call HandlerNotifyBufCmd
+            OnEvent  EVATTRNOTIFY call HandlerAttrNtfyCmd
             print ok$
         endif
     endif
@@ -2441,7 +2446,7 @@ OnEvent  EVCHARDESC               call HandlerCharDesc
 
 
 
-// OnEvent  EVGPIOCHAN0              call HandlerSio28
+//OnEvent  EVGPIOCHAN0              call HandlerSio28
 OnEvent  EVMSGAPP                 call SetMode
 
 //------------------------------------------------------------------------------
@@ -2487,5 +2492,3 @@ UartRsp(0)
 // An application can have multiple <WaitEvent> statements
 //------------------------------------------------------------------------------
 WaitEvent
-
-

@@ -1,5 +1,18 @@
-//******************************************************************************
-// Laird Technologies (c) 2014
+// Copyright (c) 2014, Laird
+//
+// Permission to use, copy, modify, and/or distribute this software for any
+// purpose with or without fee is hereby granted, provided that the above
+// copyright notice and this permission notice appear in all copies.
+//
+// THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES
+// WITH REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF
+// MERCHANTABILITY AND FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY
+// SPECIAL, DIRECT, INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES
+// WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS, WHETHER IN AN
+// ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF OR
+// IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
+//
+// SPDX-License-Identifier:ISC
 //
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 // +++++                                                                      ++
@@ -18,10 +31,10 @@
 //
 //
 // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//		hciconfig letpl		[level]		Get/Set LE transmit power level
-//		hciconfig version				Display version information
-//		hciconfig leadv  				Enable LE advertising
-//		hciconfig noleadv				Disable LE advertising
+//        hciconfig letpl    [level]    Get/Set LE transmit power level
+//        hciconfig version             Display version information
+//        hciconfig leadv               Enable LE advertising
+//        hciconfig noleadv             Disable LE advertising
 // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 //
 //
@@ -34,14 +47,14 @@
 //==============================================================================
 sub _hciCfgHelp()
 
-	print "Usage:\n"
-	print "	hciconfig <command> [command parameters]\n\n"
-	print "Commands:\n"
-	print "	version				Display version information\n"
-	print "	leadv  				Enable LE advertising\n"
-	print "	noleadv				Disable LE advertising\n"
-	print "	letpl		[level]		Get/Set LE transmit power level\n"
-	print "\n"
+    print "Usage:\n"
+    print "    hciconfig <command> [command parameters]\n\n"
+    print "Commands:\n"
+    print "    version                Display version information\n"
+    print "    leadv                  Enable LE advertising\n"
+    print "    noleadv                Disable LE advertising\n"
+    print "    letpl        [level]        Get/Set LE transmit power level\n"
+    print "\n"
 
 endsub
 //==============================================================================
@@ -49,76 +62,76 @@ endsub
 //==============================================================================
 sub _hciCfg()
 
-	// Extract and process hciconfig subcommand
+    //Extract and process hciconfig subcommand
 
-	dim s$, val
-	s$ = urtcmd$
-	while ExtractStrToken(s$, tkn$)!= 0
-		//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-		if strcmp(tkn$,"help")==0 then
-			// Display hciconfig command help menu
-			_hciCfgHelp()
-			break
+    dim s$, val
+    s$ = urtcmd$
+    while ExtractStrToken(s$, tkn$)!= 0
+        //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+        if strcmp(tkn$,"help")==0 then
+            //Display hciconfig command help menu
+            _hciCfgHelp()
+            break
 
-		//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-		elseif strcmp(tkn$, "leadv")==0 then
-			// Enable LE adverts
-			dim a$
-			rc = BleAdvertStart(0,a$,25,0,0)
-			AssertResCode(rc)
+        //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+        elseif strcmp(tkn$, "leadv")==0 then
+            //Enable LE adverts
+            dim a$
+            rc = BleAdvertStart(0,a$,25,0,0)
+            AssertResCode(rc)
 
-		//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-		elseif strcmp(tkn$, "noleadv")==0 then
-			// Disable LE adverts
-			rc = BleAdvertStop()
-			AssertResCode(rc)
+        //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+        elseif strcmp(tkn$, "noleadv")==0 then
+            //Disable LE adverts
+            rc = BleAdvertStop()
+            AssertResCode(rc)
 
-		//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-		elseif strcmp(tkn$, "letpl")==0 then
-			// Get/set the LE transmit power level
-			if ExtractStrToken(s$, tkn$) == 0  then
-				// Display the LE transmit power level
-				print "LE transmit power level : ";letpl;"\n"
-			else 
-				// Set the LE transmit power level
-				if strcmp(tkn$,"-")==0 then
-					rc = ExtractStrToken(s$, tkn$)
-					val = StrValDec(tkn$)
-					if (val > 20) then
-						print "Invalid power value. Valid range is from -20 to 8 dBm\n"
-					else
-						letpl = val*-1
-					endif
-				else
-					val = StrValDec(tkn$)
-					if (val > 8) then
-						print "Invalid power value. Valid range is from -20 to 8 dBm\n"
-					else
-						letpl =  val
-					endif
-				endif
-				rc = BleTxPowerSet(letpl)
-				AssertResCode(rc)
-			endif
+        //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+        elseif strcmp(tkn$, "letpl")==0 then
+            //Get/set the LE transmit power level
+            if ExtractStrToken(s$, tkn$) == 0  then
+                //Display the LE transmit power level
+                print "LE transmit power level : ";letpl;"\n"
+            else 
+                //Set the LE transmit power level
+                if strcmp(tkn$,"-")==0 then
+                    rc = ExtractStrToken(s$, tkn$)
+                    val = StrValDec(tkn$)
+                    if (val > 20) then
+                        print "Invalid power value. Valid range is from -20 to 8 dBm\n"
+                    else
+                        letpl = val*-1
+                    endif
+                else
+                    val = StrValDec(tkn$)
+                    if (val > 8) then
+                        print "Invalid power value. Valid range is from -20 to 8 dBm\n"
+                    else
+                        letpl =  val
+                    endif
+                endif
+                rc = BleTxPowerSet(letpl)
+                AssertResCode(rc)
+            endif
 
-		//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-		elseif strcmp(tkn$, "version")==0 then
-			// Display version information
-			dim fw, W, X, Y, Z
-			fw = SYSINFO(3)
-			W =  fw >> 26
-			X = (fw >> 20) & 0x3F
-			Y = (fw >>  6) & 0x3FFF
-			Z =  fw  & 0x3F
-			print "\nApp Version: smartZ Version ";mjVersion;".";mnVersion;"\n"
-			print "Device Name: ";BleGetDeviceName$();"\n"
-			print "Firmware: ";W;".";X;".";Y;".";Z;"\n"
-			print "Manufacturer: Laird Technologies\n"
+        //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+        elseif strcmp(tkn$, "version")==0 then
+            //Display version information
+            dim fw, W, X, Y, Z
+            fw = SYSINFO(3)
+            W =  fw >> 26
+            X = (fw >> 20) & 0x3F
+            Y = (fw >>  6) & 0x3FFF
+            Z =  fw  & 0x3F
+            print "\nApp Version: smartZ Version ";mjVersion;".";mnVersion;"\n"
+            print "Device Name: ";BleGetDeviceName$();"\n"
+            print "Firmware: ";W;".";X;".";Y;".";Z;"\n"
+            print "Manufacturer: Laird Technologies\n"
 
-		//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+        //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-		endif
-	endwhile
+        endif
+    endwhile
 
 endsub
 

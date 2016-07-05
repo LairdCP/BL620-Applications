@@ -1,5 +1,18 @@
-//******************************************************************************
-// Laird Technologies (c) 2014
+// Copyright (c) 2014, Laird
+//
+// Permission to use, copy, modify, and/or distribute this software for any
+// purpose with or without fee is hereby granted, provided that the above
+// copyright notice and this permission notice appear in all copies.
+//
+// THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES
+// WITH REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF
+// MERCHANTABILITY AND FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY
+// SPECIAL, DIRECT, INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES
+// WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS, WHETHER IN AN
+// ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF OR
+// IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
+//
+// SPDX-License-Identifier:ISC
 //
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 // +++++                                                                      ++
@@ -224,11 +237,11 @@
 // Definitions
 //******************************************************************************
         //Default Scan Interval ms
-#define SCAN_INTERVAL_DEF                    80  
+#define SCAN_INTERVAL_DEF                   80
         //Default Scan Window ms
-#define SCAN_WINDOW_DEF                      40
+#define SCAN_WINDOW_DEF                     40
         //Default Scan Type ms
-#define SCAN_TYPE_DEF                        40 
+#define SCAN_TYPE_DEF                       40 
 
         //Connection timeout ms
 #define CONN_TMT                            10000
@@ -239,77 +252,77 @@
         //Link supervision timeout us
 #define LINK_SUP_TMT                        3000000
         //Scan timeout ms
-#define SCAN_TMT                            10000       
+#define SCAN_TMT                            10000
 
 
         //Set this to 0 to disable all debugging messages
-#define ENABLE_DEBUG_PRINTS                  1
+#define ENABLE_DEBUG_PRINTS                 1
         // Max Number of connections
-#define NUM_OF_CONNS                         1
+#define NUM_OF_CONNS                        1
         // size of i[]
-#define NUM_OF_I_PARAMS                     (8)
-        // size of s$[] and must be at least 8 elements for BleSvcRegDevInfo()     
-#define NUM_OF_S_PARAMS                     (8)
+#define NUM_OF_I_PARAMS                    (8)
+        // size of s$[] and must be at least 8 elements for BleSvcRegDevInfo()
+#define NUM_OF_S_PARAMS                    (8)
 
 
-        '// Laird Technologies 128 bit Base UUID
+        //Laird Technologies 128 bit Base UUID
 #define LT_BASE_UUID                        "\56\9a\00\00\b8\7f\49\0c\92\cb\11\ba\5e\a5\16\7c\"
-        '// iBeacon Service 16 bit UUID
+        //iBeacon Service 16 bit UUID
 #define IBEACON_SVC_UUID                    0x1900
-        '// Bluetooth Battery Service 16 bit UUID
+        //Bluetooth Battery Service 16 bit UUID
 #define BT_BATT_SVC_UUID                    0x180F
-        '// iBeacon Service Device Name char UUID
+        //iBeacon Service Device Name char UUID
 #define IBEACON_DEVNAME_CHAR_UUID           0x2010
-        '// iBeacon Service UUID char UUID
+        //iBeacon Service UUID char UUID
 #define IBEACON_UUID_CHAR_UUID              0x2012
-        '// iBeacon Service Major char UUID
+        //iBeacon Service Major char UUID
 #define IBEACON_MAJOR_CHAR_UUID             0x2013
-        '// iBeacon Service Minor char UUID
+        //iBeacon Service Minor char UUID
 #define IBEACON_MINOR_CHAR_UUID             0x2014
-        '// Bluetooth Adopted TX Power char UUID
+        //Bluetooth Adopted TX Power char UUID
 #define TX_CHAR_UUID                        0x2A07
-        '// iBeacon Service Advertising Interval char UUID
+        //iBeacon Service Advertising Interval char UUID
 #define IBEACON_ADINT_CHAR_UUID             0x2015
-        '// iBeacon Service Advertising Timeout char UUID
+        //iBeacon Service Advertising Timeout char UUID
 #define IBEACON_ADTO_CHAR_UUID              0x2016
-        '// iBeacon Service Calibrated RSSI Value char UUID
+        //iBeacon Service Calibrated RSSI Value char UUID
 #define IBEACON_CALRSSI_CHAR_UUID           0x2017
-        '// iBeacon Service Remain Connectible Time Value char UUID
+        //iBeacon Service Remain Connectible Time Value char UUID
 #define IBEACON_REMCONNTIME_CHAR_UUID       0x2018
-        '// Bluetooth Adopted Battery Level char UUID
+        //Bluetooth Adopted Battery Level char UUID
 #define BATTLVL_CHAR_UUID                   0x2A19
 
 
-        '// Array index for device name
-#define DVC_NME_INDEX                        0
-        '// Array index for format
-#define FORMAT_INDEX                         1
-        '// Array index for UUID value 
-#define UUID_INDEX                           2
-        '// Array index for Major value
-#define MAJOR_INDEX                          3
-        '// Array index for Minor value
-#define MINOR_INDEX                          4
-        '// Array index for TxPower value
-#define TXPOWER_INDEX                        5
-        '// Array index for Interval (supplied in 20ms units)
-#define ADV_INTVL_INDEX                      6
-        '//Array index for Time out (supplied as minutes)
-#define ADV_TMT_INDEX                        7 
-        '//Array index for Calibrated RSSI Value 
-#define CAL_RSSI_INDEX                       8
-        '// Array index for Remain Connectible Time (supplied in seconds)
-#define REM_CONN_TME_INDEX                   9
-        '// Array index for Battery Level char
-#define BATTLVL_INDEX                        10
+        //Array index for device name
+#define DVC_NME_INDEX                       0
+        //Array index for format
+#define FORMAT_INDEX                        1
+        //Array index for UUID value 
+#define UUID_INDEX                          2
+        //Array index for Major value
+#define MAJOR_INDEX                         3
+        //Array index for Minor value
+#define MINOR_INDEX                         4
+        //Array index for TxPower value
+#define TXPOWER_INDEX                       5
+        //Array index for Interval (supplied in 20ms units)
+#define ADV_INTVL_INDEX                     6
+        //Array index for Time out (supplied as minutes)
+#define ADV_TMT_INDEX                       7 
+        //Array index for Calibrated RSSI Value 
+#define CAL_RSSI_INDEX                      8
+        //Array index for Remain Connectible Time (supplied in seconds)
+#define REM_CONN_TME_INDEX                  9
+        //Array index for Battery Level char
+#define BATTLVL_INDEX                       10
 
 
 //BLE EVENT MSG IDs
-#define BLE_EVBLEMSGID_CONNECT                          0 // msgCtx = connection handle
-#define BLE_EVBLEMSGID_DISCONNECT                       1 // msgCtx = connection handle
+#define BLE_EVBLEMSGID_CONNECT              0 //msgCtx = connection handle
+#define BLE_EVBLEMSGID_DISCONNECT           1 //msgCtx = connection handle
 
-        '//Number of characteristics 
-#define NUM_OF_CHARS                         11
+        //Number of characteristics 
+#define NUM_OF_CHARS                        11
 
 
 //******************************************************************************
@@ -321,46 +334,45 @@ dim stRsp$ as string          //Uart rx data is stored here
 
 dim ok$,er$,pr$,nc$,uc$
 
-dim i[NUM_OF_I_PARAMS]        //index 0 used for return values
-dim s$[NUM_OF_S_PARAMS]       //must be at least 8 elements for BleSvcRegDevInfo()
+dim i[NUM_OF_I_PARAMS]        //Index 0 used for return values
+dim s$[NUM_OF_S_PARAMS]       //Must be at least 8 elements for BleSvcRegDevInfo()
 
-dim urtcmd$                   //cmd line from uart
-dim tkn$,tlen                 //used by command parser
-dim hc[NUM_OF_CONNS+1]        //contains connection handles
-dim numConns                     //number of connections
-dim urts                      //will be <0 if uart parser suspended
-dim carCnt                    //count variable for number of times '^' entered
+dim urtcmd$                   //CMD line from uart
+dim tkn$,tlen                 //Used by command parser
+dim hc[NUM_OF_CONNS+1]        //Contains connection handles
+dim numConns                  //Number of connections
+dim urts                      //Will be <0 if uart parser suspended
+dim carCnt                    //Count variable for number of times '^' entered
 dim ScanTimeout               //When a scan will timeout (seconds)
 dim ScanDuplicates            //Set to 1 to show duplicate devices
 dim ScanDevices               //Maximum number of devices to discover
 dim ScanTable$                //Table containing IDs of devices
 dim ScanDeviceCount           //Number of devices found on this scan
 
-dim hIBSvcUUID               //handle of LT iBeacon Service UUID
-dim hChars[NUM_OF_CHARS]     '//array of characteristic value attribute handles
-                               // 0 : Device Name
-                               // 1 : Format (Not used)
-                               // 2 : iBeacon UUID 
-                               // 3 : iBeacon Major 
-                               // 4 : iBeacon Minor 
-                               // 5 : iBeacon TxPower (Adopted Char from Bluetooth SIG)
-                               // 6 : Advertising Interval
-                               // 7 : Advert Time out
-                               // 8 : Calibrated RSSI Value
-                               // 9 : Remain Connectible Time
-                               // 10: Battery Level
-                             '//---------------------------------------
-                             
-dim hCharUUIDs[NUM_OF_CHARS]  //array of characteristic UUIDs - indexes same as above
+dim hIBSvcUUID                //Handle of LT iBeacon Service UUID
+dim hChars[NUM_OF_CHARS]      //Array of characteristic value attribute handles
+                              // 0 : Device Name
+                              // 1 : Format (Not used)
+                              // 2 : iBeacon UUID 
+                              // 3 : iBeacon Major 
+                              // 4 : iBeacon Minor 
+                              // 5 : iBeacon TxPower (Adopted Char from Bluetooth SIG)
+                              // 6 : Advertising Interval
+                              // 7 : Advert Time out
+                              // 8 : Calibrated RSSI Value
+                              // 9 : Remain Connectible Time
+                              // 10: Battery Level
+                              //---------------------------------------
 
-dim tbDispParams$             //table of specified display parameters for iBeacon advert reports
-                              //see 'config scan display'
+dim hCharUUIDs[NUM_OF_CHARS]  //Array of characteristic UUIDs - indexes same as above
 
-dim charIndex                 //index of current characteristic being found/processed
+dim tbDispParams$             //Table of specified display parameters for iBeacon advert reports
+                              //See 'config scan display'
+
+dim charIndex                 //Index of current characteristic being found/processed
 
 dim ltBseUuid$                //LT Base UUID
-dim hBseUuid                  //handle if the LT Base UUID
-                              
+dim hBseUuid                  //Handle if the LT Base UUID
 
 //******************************************************************************
 // Initialisse Global Variable
@@ -372,8 +384,8 @@ pr$    = "\r\n>"
 nc$    = "\nNot Connected"
 uc$    = "\nUNKNOWN COMMAND"
 
-urts = 0            //not suspended
-numConns = 0           //number of connections
+urts = 0            //Not suspended
+numConns = 0        //Number of connections
 ScanTimeout = 10    //Default scan time of 10 seconds
 ScanDuplicates = 0  //Do not show duplicates
 ScanDevices = 0     //Unlimited number of devices
@@ -394,7 +406,6 @@ hCharUUIDs[ADV_TMT_INDEX] = BleHandleUuidSibling(hBseUuid, IBEACON_ADTO_CHAR_UUI
 hCharUUIDs[CAL_RSSI_INDEX] = BleHandleUuidSibling(hBseUuid, IBEACON_CALRSSI_CHAR_UUID)
 hCharUUIDs[REM_CONN_TME_INDEX] = BleHandleUuidSibling(hBseUuid, IBEACON_REMCONNTIME_CHAR_UUID)
 hCharUUIDs[BATTLVL_INDEX] = BleHandleUuid16(BATTLVL_CHAR_UUID)
-
 
 
 //******************************************************************************
@@ -478,66 +489,63 @@ function ExtractStrTokens(u$,stIdx,num)
 endfunc 0
 
 
-
-
-
-'//******************************************************************************
-'// Function and Subroutine definitions
-'//******************************************************************************
-'//------------------------------------------------------------------------------
-'// Swap the order of the 2 lower bytes of the argument
-'//------------------------------------------------------------------------------
+//******************************************************************************
+// Function and Subroutine definitions
+//******************************************************************************
+//------------------------------------------------------------------------------
+// Swap the order of the 2 lower bytes of the argument
+//------------------------------------------------------------------------------
 Function SwapBytes(v)
 Endfunc ((v>>8)&0xFF) + ((v<<8)&0xFF00)
 
 
-'//------------------------------------------------------------------------------
-'// Get index of the given handle in the 'hChars[]' array
-'//------------------------------------------------------------------------------
+//------------------------------------------------------------------------------
+// Get index of the given handle in the 'hChars[]' array
+//------------------------------------------------------------------------------
 Function GetCharIndex(ByVal cHndl)
    dim i
-    for i=0 to NUM_OF_CHARS-1 
+    for i=0 to NUM_OF_CHARS-1
         if hChars[i]==cHndl then
-            ExitFunc i                 //return the index of given handle 
+            ExitFunc i                 //Return the index of given handle
         endif
-    next    
-EndFunc -1                             //at this point, whole array has been searched.
+    next
+EndFunc -1                             //At this point, whole array has been searched.
+
  
- 
-'//------------------------------------------------------------------------------
-'// Extract the iBeacon elements from the advert report 
-'// -- Uses the parameters given in 'config scan display'
-'//------------------------------------------------------------------------------
+//------------------------------------------------------------------------------
+// Extract the iBeacon elements from the advert report 
+// -- Uses the parameters given in 'config scan display'
+//------------------------------------------------------------------------------
 Sub PrintiBeaconParams(iBeaconDta$)
     dim rc, uuid$, tok$, major, minor, tx
-    
-    //strip off first 4 bytes (company ID, datatype, length)
+
+    //Strip off first 4 bytes (company ID, datatype, length)
     StrShiftLeft(iBeaconDta$, 4)
-    
-    '//get the uuid
+
+    //Get the uuid
     uuid$ = StrSplitLeft$(iBeaconDta$,16)
     uuid$ = StrHexize$(uuid$)
-    
-    '//get the major value
+
+    //Get the major value
     rc=BleDecodeU16(iBeaconDta$, major, 0)
     major = SwapBytes(major)
     StrShiftLeft(iBeaconDta$,2)
-    
-    '//get the minor value
+
+    //Get the minor value
     rc=BleDecodeU16(iBeaconDta$, minor, 0)
     minor = SwapBytes(minor)
     StrShiftLeft(iBeaconDta$,2)
-    
-    '//get the tx power
+
+    //Get the tx power
     rc=BleDecodeS8(iBeaconDta$, tx, 0)
-    
-    '//print no iBeacon parameters
+
+    //Print no iBeacon parameters
     tok$ = "none"
-    if TableLookup(tbDispParams$,tok$)>=0 then      
+    if TableLookup(tbDispParams$,tok$)>=0 then
         exitsub
     endif
-    
-    '//print all iBeacon parameters
+
+    //Print all iBeacon parameters
     tok$ = "all"
     if TableLookup(tbDispParams$,tok$)>=0 then
         print "\n   (UUID)     ";uuid$
@@ -546,33 +554,33 @@ Sub PrintiBeaconParams(iBeaconDta$)
         print "\n   (1m RSSI)  ";tx
         
         exitsub
-    endif  
-    
-    '//print the iBeacon UUID
+    endif
+
+    //Print the iBeacon UUID
     tok$ = "uuid"
     if TableLookup(tbDispParams$,tok$)>=0 then
         print "\n   (UUID)     ";uuid$
     endif
-    
-    '//print the iBeacon major val
+
+    //Print the iBeacon major val
     tok$ = "major"
     if TableLookup(tbDispParams$,tok$)>=0 then
         print "\n   (Major)    ";major
     endif
-    
-    '//print the iBeacon minor val
+
+    //Print the iBeacon minor val
     tok$ = "minor"
     if TableLookup(tbDispParams$,tok$)>=0 then
         print "\n   (Minor)    ";minor
     endif
-    
-    '//print the iBeacon tx power
+
+    //Print the iBeacon tx power
     tok$ = "tx"
     if TableLookup(tbDispParams$,tok$)>=0 then
         print "\n   (1m RSSI)  ";tx
     endif
 EndSub
-    
+
 
 //-------------------------------------------------------------------------
 //#CMD#//  config scan timeout #INTtimeoutsec#
@@ -587,41 +595,39 @@ function _configScan()
     if tlen == 0 then
         exitfunc -4
     endif
-    
+
     //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     if strcmp(tkn$,"timeout")==0 then
-        //extract 1 (#INTmode#) and store starting at i[1]
+        //Extract 1 (#INTmode#) and store starting at i[1]
         rc = ExtractIntTokens(urtcmd$,1,1)
-        
+
         if rc != 0 then
             exitfunc rc
         endif
-        
+
         ScanTimeout = i[1]
         exitfunc 0
-        
-        
+
     //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     elseif strcmp(tkn$,"interval")==0 then
-        //extract 1 (#INTmode#) and store starting at i[1]
+        //Extract 1 (#INTmode#) and store starting at i[1]
         rc = ExtractIntTokens(urtcmd$,1,1)
         if rc != 0 then
             exitfunc rc
         endif
-        
+
         exitfunc BleScanConfig(0,i[1])
-        
-        
+
     //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     elseif strcmp(tkn$,"window")==0 then
-        //extract 1 (#INTmode#) and store starting at i[1]
+        //Extract 1 (#INTmode#) and store starting at i[1]
         rc = ExtractIntTokens(urtcmd$,1,1)
         if rc != 0 then
             exitfunc rc
         endif
-        
+
         exitfunc BleScanConfig(1,i[1])
-    
+
     //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     elseif strcmp(tkn$,"display")==0 then
         dim tbDisParIDs : tbDisParIDs = 0
@@ -629,16 +635,16 @@ function _configScan()
         if TableInit(tbDispParams$)!=0 then
             exitfunc rc
         endif
-                
+
         if StrLen(urtcmd$) < 3 then
-            exitfunc -4     //give unknown command response to user
+            exitfunc -4     //Give unknown command response to user
         endif
-        
+
         while ExtractStrToken(urtcmd$,tkn$)!=0
-            '//add each parameter to the table
-            if strcmp(tkn$,"-")!=0 then           
+            //Add each parameter to the table
+            if strcmp(tkn$,"-")!=0 then
                 tbDisParIDs = tbDisParIDs+1
-                
+
                 if TableAdd(tbDispParams$,tkn$,tbDisParIDs)!=0 then
                     tbDisParIDs = tbDisParIDs - 1
                     exitfunc rc
@@ -647,31 +653,31 @@ function _configScan()
         endwhile 
 
         exitfunc 0
-        
+
     //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     elseif strcmp(tkn$,"numdevices")==0 then
-        //extract 1 (#INTdevicestoshow#) and store starting at i[1]
+        //Extract 1 (#INTdevicestoshow#) and store starting at i[1]
         rc = ExtractIntTokens(urtcmd$,1,1)
         if rc != 0 then
           exitfunc rc
         endif
         ScanDevices = i[1]
         exitfunc 0
-        
+
     //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     elseif strcmp(tkn$,"showduplicates")==0 then
-        //extract 1 (#INTshowduplicates#) and store starting at i[1]
+        //Extract 1 (#INTshowduplicates#) and store starting at i[1]
         rc = ExtractIntTokens(urtcmd$,1,1)
         if rc != 0 then
             exitfunc rc
         endif
-      
+
         if (i[1] == 0 || i[1] == 1) then
             //Valid
             ScanDuplicates = i[1]
             exitfunc 0
         endif
-        
+
     endif
 endfunc -4
 
@@ -679,7 +685,7 @@ endfunc -4
 //-------------------------------------------------------------------------
 // Start scanning for iBeacons
 //-------------------------------------------------------------------------
-function _scan() 
+function _scan()
     rc=BleScanStop()
     rc = TableInit(ScanTable$) //Create lookup table
     AssertResCode(rc, 333)
@@ -688,109 +694,106 @@ function _scan()
     if rc!=0 then
         exitfunc rc
     endif
-endfunc -1   //don't give response to the user until scan stops
+endfunc -1   //Don't give response to the user until scan stops
 
-    
+
 //-------------------------------------------------------------------------
 // Connect to either specified or default device
 //-------------------------------------------------------------------------
-function _connect() 
+function _connect()
     if numConns == NUM_OF_CONNS then
         print "\nAlready Connected"
         exitfunc -2
     endif
-    
-    '//Stop scanning before connecting
-    rc=BleScanStop()  
-    
-    '//only opening gatt client when we need it to save memory
+
+    //Stop scanning before connecting
+    rc=BleScanStop()
+
+    //Only opening gatt client when we need it to save memory
     rc=BleGattcOpen(0,0)
     AssertResCode(rc,452)
- 
+
     rc=ExtractStrTokens(urtcmd$,1,1)
-    '//use #defined/stored mac address if none given
+    //Use #defined/stored mac address if none given
     if rc!=0 then
         exitfunc 5
     endif
-    
+
     s$[1] = StrDehexize$(s$[1])
 
     rc=BleConnect(s$[1], CONN_TMT, MIN_CONN_INTVL, MAX_CONN_INTVL, LINK_SUP_TMT)
     if rc!=0 then
         exitfunc rc
-    endif  
+    endif
 endfunc -1
 
 
 //-------------------------------------------------------------------------
 // Disconnect
 //-------------------------------------------------------------------------
-function _disconnect() 
+function _disconnect()
     rc = BleDisconnect(hc[0])
-endfunc -1  //dont give response to user
+endfunc -1  //Don't give response to user
 
 
 //-------------------------------------------------------------------------
 // iBeacon config - write or read characteristic
 //-------------------------------------------------------------------------
-function _iBeaconConfig(chrInd) 
+function _iBeaconConfig(chrInd)
     if numConns == 0 then
-        exitfunc -3     //print not connected response
+        exitfunc -3     //Print not connected response
     endif
-    
-    //get '?' or '='
+
+    //Get '?' or '='
     dim tkn
     tlen = ExtractStrToken(urtcmd$,tkn$)
     if tlen == 0 then
         exitfunc -4
     endif
-    
-    
-    '//if reading the value of a characteristic
-    if strcmp(tkn$,"?")==0 then 
+
+    //If reading the value of a characteristic
+    if strcmp(tkn$,"?")==0 then
         rc=BleGattcRead(hc[0],hChars[chrInd],0)
         AssertResCode(rc,671)
-        
-    '//if writing a new value to a characteristic
+
+    //If writing a new value to a characteristic
     elseif strcmp(tkn$,"=")==0 then
-        if chrInd == (DVC_NME_INDEX) || chrInd == (UUID_INDEX) then   
-            '//remove leading spaces
+        if chrInd == (DVC_NME_INDEX) || chrInd == (UUID_INDEX) then
+            //Remove leading spaces
             while StrGetChr(urtcmd$,0)==0x20
                 StrShiftLeft(urtcmd$,1)
             endwhile
-            
-            '//remove carriage return
+
+            //Remove carriage return
             dim s$ : s$ = Right$(urtcmd$,1)
             if StrGetChr(s$,0)==0x0D then
                 urtcmd$ = StrSplitLeft$(urtcmd$,(StrLen(urtcmd$)-1))
             endif
-            
-            if chrInd == (UUID_INDEX) then            
+
+            if chrInd == (UUID_INDEX) then
                 urtcmd$ = StrDehexize$(urtcmd$)
             endif
             tkn$ = urtcmd$
-            
-        
-        elseif chrInd == (MAJOR_INDEX) || chrInd == (MINOR_INDEX) then  
+
+        elseif chrInd == (MAJOR_INDEX) || chrInd == (MINOR_INDEX) then
             tlen = ExtractStrToken(urtcmd$,tkn$)
             tkn$ = StrDehexize$(tkn$)
-        else    
+        else
             tlen = ExtractIntToken(urtcmd$,tkn)
             rc= BleEncode8(tkn$, tkn, 0)
         endif
-        
-        '//write new value to characteristic
+
+        //Write new value to characteristic
         rc=BleGattcWrite(hc[0], hChars[chrInd], tkn$)
-        if rc!=0 then   
+        if rc!=0 then
             exitfunc rc
         endif
         tkn$=""
-    else    
+    else
         exitfunc -4
-    endif      
+    endif
 endfunc -1
-    
-    
+
 
 //-------------------------------------------------------------------------
 //#CMD#//  config scan ...
@@ -808,12 +811,12 @@ function _Config()
 
     //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     elseif strcmp(tkn$,"txpower")==0 then
-        //extract 1 (#INTtxpower#) and store starting at i[1]
+        //Extract 1 (#INTtxpower#) and store starting at i[1]
         rc = ExtractIntTokens(urtcmd$,1,1)
         exitfunc BleTxPowerSet(i[1])
-        
+
     endif
-endfunc -4    //send an "UNKNOWN COMMAND" response to user
+endfunc -4    //Send an "UNKNOWN COMMAND" response to user
 
 
 //-------------------------------------------------------------------------
@@ -836,8 +839,8 @@ endfunc -4    //send an "UNKNOWN COMMAND" response to user
 //#CMD#//  batt?
 //-------------------------------------------------------------------------
 function OnUartCmd() as integer
-  rc=-2 //default response is ">"
-  tlen = ExtractStrToken(urtcmd$,tkn$) //get first token
+  rc=-2 //Default response is ">"
+  tlen = ExtractStrToken(urtcmd$,tkn$) //Get first token
   if tlen > 0 then
 
         if strcmp(tkn$,"stop")==0 then
@@ -845,9 +848,9 @@ function OnUartCmd() as integer
             rc = BleScanStop()
 
         elseif strcmp(tkn$,"scan")==0 then
-            //Start scanning for iBeacons          
+            //Start scanning for iBeacons
             rc = _scan()
-            
+
         elseif strcmp(tkn$,"config")==0 then
             //Change configuration
             rc = _Config()
@@ -862,79 +865,78 @@ function OnUartCmd() as integer
             //Stop scanning for iBeacons
             rc = BleScanStop()
             exitfunc 0
-            
-        '//These are the iBeacon config commands   
+
+        //These are the iBeacon config commands
         elseif strcmp(tkn$,"devname")==0 then
             rc=_iBeaconConfig(DVC_NME_INDEX)
-            
+
         elseif strcmp(tkn$,"uuid")==0 then
             rc=_iBeaconConfig(UUID_INDEX)
-            
-        elseif strcmp(tkn$,"major")==0 then 
+
+        elseif strcmp(tkn$,"major")==0 then
             rc=_iBeaconConfig(MAJOR_INDEX)
-        
-        elseif strcmp(tkn$,"minor")==0 then 
+
+        elseif strcmp(tkn$,"minor")==0 then
             rc=_iBeaconConfig(MINOR_INDEX)
-        
-        elseif strcmp(tkn$,"txpower")==0 then 
+
+        elseif strcmp(tkn$,"txpower")==0 then
             rc=_iBeaconConfig(TXPOWER_INDEX)
-        
-        elseif strcmp(tkn$,"adinterval")==0 then 
+
+        elseif strcmp(tkn$,"adinterval")==0 then
             rc=_iBeaconConfig(ADV_INTVL_INDEX)
-            
-        elseif strcmp(tkn$,"adtimeout")==0 then 
+
+        elseif strcmp(tkn$,"adtimeout")==0 then
             rc=_iBeaconConfig(ADV_TMT_INDEX)
-            
-        elseif strcmp(tkn$,"calrssi")==0 then 
+
+        elseif strcmp(tkn$,"calrssi")==0 then
             rc=_iBeaconConfig(CAL_RSSI_INDEX)
-           
-        elseif strcmp(tkn$,"timeconnectable")==0 then 
+
+        elseif strcmp(tkn$,"timeconnectable")==0 then
             rc=_iBeaconConfig(REM_CONN_TME_INDEX)
-        
-        elseif strcmp(tkn$,"batt")==0 then 
+
+        elseif strcmp(tkn$,"batt")==0 then
             rc=_iBeaconConfig(BATTLVL_INDEX)
-            
+
         else
             rc=-4   //send an "UNKNOWN COMMAND" response to user
 
         endif
   endif
-  // send a response back to the user
+  //Send a response back to the user
   UartRsp(rc)
 endfunc 1
 
 
-'//******************************************************************************
-'// Handler definitions
-'//******************************************************************************
+//******************************************************************************
+// Handler definitions
+//******************************************************************************
 //------------------------------------------------------------------------------
 // This handler is called when there is an advert report waiting to be read
 //------------------------------------------------------------------------------
 function HandlerAdvRpt() as integer
-    '//--- iBeacon Advert Report Format:                                              
-    '// 0 1  2  3  4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9  0 1  2 3  4
-    '// CompanyID
-    '//      DataType
-    '//         Length
-    '//            UUID
-    '//                                             0 1  2 3  4
-    '//                                             Major
-    '//                                                  Minor
-    '//                                                       TxPower
-    '// 4C00 02 15 E2C56DB5DFFB48D2B060D0F5A71096E0 0000 0000 C5
-    '// ---
-    
+    //--- iBeacon Advert Report Format:
+    // 0 1  2  3  4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9  0 1  2 3  4
+    // CompanyID
+    //      DataType
+    //         Length
+    //            UUID
+    //                                             Major
+    //                                                  Minor
+    //                                                       TxPower
+    // 4C00 02 15 E2C56DB5DFFB48D2B060D0F5A71096E0 0000 0000 C5
+    // ---
+
     dim ad$,dta$,ndisc,rsi,nme$
-    
+
     while BleScanGetAdvReport(ad$,dta$,ndisc,rsi)==0
         dim uuid$, major, minor, txpower, iBdta$
-        
-        '//this tells us whether advert report came from an iBeacon
+
+        //This tells us whether advert report came from an iBeacon
         if StrGetChr(dta$,7)==0x02 && StrGetChr(dta$,8)==0x15 then
-        
-            '//if not displaying duplicate scan report from the same device
+
+            //If not displaying duplicate scan report from the same device
             if ScanDuplicates == 0 then
-                //if device isn't in the table
+                //If device isn't in the table
                 if TableLookup(ScanTable$,ad$)<0 then
                     rc=TableAdd(ScanTable$, ad$, ScanDeviceCount)
                     ScanDeviceCount = ScanDeviceCount + 1
@@ -942,56 +944,56 @@ function HandlerAdvRpt() as integer
                     break
                 endif
             endif
-            
-            '//get name of device
+
+            //Get name of device
             rc=BleGetADByTag(dta$,0x09,nme$)
-            
+
             //Get AD element with iBeacon data
             rc=BleGetADByTag(dta$,0xFF,iBdta$)
-          
-            '//print <MAC Address> :  <RSSI> : <Device Name> 
+
+            //Print <MAC Address> :  <RSSI> : <Device Name> 
             print "\n";StrHexize$(ad$);"  : ";rsi;" :  ";nme$
-            
+
             PrintiBeaconParams(iBdta$)
 
-            '//for printing other AD elements    
+            //For printing other AD elements
             dim i, s$, tok$
-        
-            '//if 'other' was specified as a parameter in 'config scan display', print the other AD tags
+
+            //If 'other' was specified as a parameter in 'config scan display', print the other AD tags
             tok$ = "other"
             if TableLookup(tbDispParams$,tok$)>=0 then
                 print "\n Other ADs: "
-                
+
                 for i=0x01 to 0xFE
                     if i==0x09 then
                     else
                         rc=BleGetAdByTag(dta$,i,s$)
                         if StrLen(s$)!=0 then
                             dim d$
-                            sprint #d$,integer.h'i                            
-                            print "\n   Tag 0x" + RIGHT$(d$,2) +": "; s$; "  Hex: "; StrHexize$(s$)    
+                            sprint #d$,integer.h'i
+                            print "\n   Tag 0x" + RIGHT$(d$,2) +": "; s$; "  Hex: "; StrHexize$(s$)
                         endif
                     endif
                 next
                 print "\n"
             endif
-            
+
             print "\n"
-                
-            '//check if max number devices have been found - when not showing duplicate reports
-            if ScanDuplicates == 0 then   
-                '//if specified max number of devices have been found
+
+            //Check if max number devices have been found - when not showing duplicate reports
+            if ScanDuplicates == 0 then
+                //If specified max number of devices have been found
                 if ScanDeviceCount == ScanDevices then
                     rc=BleScanStop()
                     ScanTable$=""
                     UartRsp(0)
                     print "\n";pr$
-                    break       
-                endif    
+                    break
+                endif
             endif
-            
+
         endif
-   
+
     endwhile
 endfunc 1
 
@@ -1001,33 +1003,33 @@ endfunc 1
 //------------------------------------------------------------------------------
 function HandlerBleMsg(BYVAL nMsgId AS INTEGER, BYVAL nCtx AS INTEGER) as integer
     hc[0] = nCtx
-  
-    select nMsgId  
+
+    select nMsgId
         case BLE_EVBLEMSGID_CONNECT
             numConns = numConns + 1
             print "\n\nCONNECT"
-            
-            // get handle of the device name characteristic
+
+            //Get handle of the device name characteristic
             charIndex = DVC_NME_INDEX
             rc=BleGattcFindChar(hc[0], hIBSvcUUID , 0, hCharUUIDs[DVC_NME_INDEX], 0)
             if rc==0 then
                 print "\nSearching for iBeacon Characteristics"
-            endif               
+            endif
             AssertResCode(rc,964)
 
         case BLE_EVBLEMSGID_DISCONNECT
             print "\nDISCONNECTED";pr$
-            
+
             numConns = numConns - 1
             if numConns < 0 then
                 numConns = 0
             endif
-            
+
             BleGattcClose()
             hc[0] = 0
-         
-        case else      
-    endselect    
+
+        case else
+    endselect
 endfunc 1
 
 
@@ -1037,36 +1039,36 @@ endfunc 1
 function HandlerFindChar(hConn, chProps, hCharVal, hIncSvc)   
     if hCharVal == 0 then
         print "\nLaird iBeacon Service not found. Disconnecting..."
-        exitfunc 1  
-    endif        
-   
-    '//First characteristic - device name. We want to skip over the Format char
+        exitfunc 1
+    endif
+
+    //First characteristic - device name. We want to skip over the Format char
     if charIndex == DVC_NME_INDEX then
         hChars[DVC_NME_INDEX] = hCharVal
-        charIndex = UUID_INDEX          //next char to find is iBeacon UUID char
-    
-    '//otherwise find the next char in the array  
+        charIndex = UUID_INDEX          //Next char to find is iBeacon UUID char
+
+    //Otherwise find the next char in the array  
     else
         hChars[charIndex] = hCharVal
-        charIndex = charIndex + 1       //set next char to find
-        
-        '//all chars have been found if current index is NUM_OF_CHARS 
+        charIndex = charIndex + 1       //Set next char to find
+
+        //All chars have been found if current index is NUM_OF_CHARS 
         if charIndex == NUM_OF_CHARS then
             print "\nDone\n"
             UartRsp(-2)
             exitfunc 1
         elseif charIndex == NUM_OF_CHARS - 1 then
-            '//find battery level char
+            //Find battery level char
             rc=BleGattcFindChar(hc[0], BleHandleUuid16(BT_BATT_SVC_UUID) , 0, hCharUUIDs[charIndex], 0)
             AssertResCode(rc, 1051)
             exitfunc 1
         endif
-            
+
     endif
-    
+
     print "."
-    
-    //find the next characteristic
+
+    //Find the next characteristic
     rc=BleGattcFindChar(hc[0], hIBSvcUUID , 0, hCharUUIDs[charIndex], 0)
     AssertResCode(rc,1011)
 endfunc 1
@@ -1075,23 +1077,23 @@ endfunc 1
 //------------------------------------------------------------------------------
 // Called after reading a characteristic's value attribute
 //------------------------------------------------------------------------------
-function HandlerAttrRead(hConn, hAttr, nSts)   
+function HandlerAttrRead(hConn, hAttr, nSts)
     dim s$, i
-    if nSts==0 then    
-        //read the data
+    if nSts==0 then
+        //Read the data
         rc=BleGattcReadData(hConn, hAttr, i, s$)
         AssertResCode(rc,1173)
-        
-        '//print 'dBm' units if char is tx power or calibrated rssi value
-        if hAttr == hChars[TXPOWER_INDEX] || hAttr == hChars[CAL_RSSI_INDEX] then    
+
+        //Print 'dBm' units if char is tx power or calibrated rssi value
+        if hAttr == hChars[TXPOWER_INDEX] || hAttr == hChars[CAL_RSSI_INDEX] then
             rc=BleDecodeS8(s$,i,0)
             print i;" dBm\n";pr$
             exitfunc 1
-            
-        '//print other units depending on the characteristic
+
+        //Print other units depending on the characteristic
         elseif hAttr == hChars[ADV_INTVL_INDEX] || hAttr == hChars[ADV_TMT_INDEX] || hAttr == hChars[REM_CONN_TME_INDEX] || hAttr == hChars[BATTLVL_INDEX] then
             print StrGetChr(s$,0)
-            
+
             i = GetCharIndex(hAttr)
             select i
                 case ADV_INTVL_INDEX
@@ -1104,17 +1106,17 @@ function HandlerAttrRead(hConn, hAttr, nSts)
                     print " %"
                 case else
             endselect
-         
-            print "\n";pr$ 
+
+            print "\n";pr$
             exitfunc 1
-            
+
         elseif hAttr != hChars[DVC_NME_INDEX] then
-            s$=StrHexize$(s$)           
+            s$=StrHexize$(s$)
         endif
         
         print s$;"\n";pr$
 
-    else    
+    else
         print "\nErr: ";integer.h'nSts
     endif
 endfunc 1
@@ -1126,17 +1128,17 @@ endfunc 1
 function HandlerAttrWrite(hConn, hAttr, nSts) 
     UartRsp(nSts)
 endfunc -1
-    
-    
+
+
 //------------------------------------------------------------------------------
 // This handler is called when there is a scan attempt timeout
 //------------------------------------------------------------------------------
 function HandlerBleScanTO() as integer
-    //erase the table where the mac addresses are being stored
+    //Erase the table where the mac addresses are being stored
     ScanTable$=""
     UartRsp(0)
-    
-    '//force release heap memory used by scan
+
+    //Force release heap memory used by scan
     rc=BleScanStart(10,0)
     rc=BleScanStop()
 endfunc 1
@@ -1155,13 +1157,13 @@ endfunc 1
 //==============================================================================
 function HandlerUartRxCmd() as integer
   dim nMatch
-  
+
   if urts < 0 then
-    //uart parser is suspended
+    //Uart parser is suspended
     exitfunc 1
   endif
 
-  //check if CR has been received
+  //Check if CR has been received
   nMatch=UartReadMatch(stRsp$,13)
   if nMatch!=0 then
     //CR exists in the input buffer

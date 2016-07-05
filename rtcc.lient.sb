@@ -1,5 +1,18 @@
-//******************************************************************************
-// Laird Technologies (c) 2014-2015
+// Copyright (c) 2015, Laird
+//
+// Permission to use, copy, modify, and/or distribute this software for any
+// purpose with or without fee is hereby granted, provided that the above
+// copyright notice and this permission notice appear in all copies.
+//
+// THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES
+// WITH REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF
+// MERCHANTABILITY AND FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY
+// SPECIAL, DIRECT, INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES
+// WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS, WHETHER IN AN
+// ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF OR
+// IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
+//
+// SPDX-License-Identifier:ISC
 //
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 // +++++                                                                      ++
@@ -8,7 +21,7 @@
 // +++++                                                                      ++
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 //
-// BT900 custom Real Time Clock (RTC) Service
+// BL620 custom Real Time Clock (RTC) Service
 //       This sample application implements the BLE RTC service with additional
 //       characteristics to allow control of the alarm and setting the time
 //       remotely.
@@ -130,23 +143,23 @@
 // -----------------------------------------------------------------------------
 
 //Defines for the DoFunc variable
-#define READ_TIME 0
-#define READ_VERSION 1
-#define READ_ALARMTIME 2
-#define READ_ALARMMODE 3
-#define WRITE_ALARMTIME 4
-#define WRITE_ALARMMODE 5
-#define WRITE_TIME 6
-#define ENABLE_NOTIFICATIONS 7
+#define READ_TIME             0
+#define READ_VERSION          1
+#define READ_ALARMTIME        2
+#define READ_ALARMMODE        3
+#define WRITE_ALARMTIME       4
+#define WRITE_ALARMMODE       5
+#define WRITE_TIME            6
+#define ENABLE_NOTIFICATIONS  7
 #define DISABLE_NOTIFICATIONS 8
  
 dim rc //Function return code
 dim TargetBT$ : TargetBT$ = "\00\00\16\a4\09\3a\99" //Bluetooth address` of the device to connect too
-dim Status : Status = 0 //0 = waiting for user input, 1 = scanning
-dim ConnectionStatus : ConnectionStatus = 0 //0 = disconnected, 1 = connected
-dim nCtxG //Global BLE handler
-dim APP_VERSION$ : APP_VERSION$ = "0.97b" //Version of client program
-dim TmpStr$ : TmpStr$ = "" //Temporary string for inter-function passing
+dim Status : Status = 0                             //0 = waiting for user input, 1 = scanning
+dim ConnectionStatus : ConnectionStatus = 0         //0 = disconnected, 1 = connected
+dim nCtxG                                           //Global BLE handler
+dim APP_VERSION$ : APP_VERSION$ = "0.97b"           //Version of client program
+dim TmpStr$ : TmpStr$ = ""                          //Temporary string for inter-function passing
  
 //List of UUID's
 dim TimeUUID : TimeUUID = 0
